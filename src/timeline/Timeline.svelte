@@ -3,7 +3,6 @@
   import { readListingTimeline } from './queries.ts'
 
   const client = getClient()
-console.warn(client)
   const proposals = query(client, { query: readListingTimeline })
 </script>
 
@@ -11,7 +10,6 @@ console.warn(client)
 {#await $proposals}
   Loading...
 {:then result}
-  {console.log('RES', result)}
   <ul>
     {#each result.data.proposals as proposal}
       <li>{proposal.name}</li>
