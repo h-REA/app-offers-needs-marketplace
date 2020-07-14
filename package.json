@@ -4,7 +4,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public"
+    "start": "sirv public -s"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^12.0.0",
@@ -13,9 +13,18 @@
     "rollup-plugin-livereload": "^1.0.0",
     "rollup-plugin-svelte": "^5.0.3",
     "rollup-plugin-terser": "^5.1.2",
-    "svelte": "^3.24.0"
+    "svelte": "^3.24.0",
+    "svelte-preprocess": "^4.0.7"
   },
   "dependencies": {
-    "sirv-cli": "^0.4.4"
+    "@valueflows/vf-graphql-holochain": "0.0.1-alpha.3",
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-client": "^2.6.10",
+    "apollo-link-schema": "^1.2.5",
+    "graphql": "^14.5.8",
+    "graphql-tag": "^2.10.4",
+    "sirv-cli": "^0.4.4",
+    "svelte-apollo": "^0.3.0",
+    "svelte-router-spa": "^5.7.1"
   }
 }
