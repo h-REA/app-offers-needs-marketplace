@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w",
+    "dev": "REACT_APP_HC_CONN_URL='ws://localhost:4001' rollup -c -w",
     "start": "sirv public -s"
   },
   "devDependencies": {
