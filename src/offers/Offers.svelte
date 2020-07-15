@@ -3,7 +3,7 @@
   import { getClient, query } from 'svelte-apollo'
   import { readOpenOffers } from './queries.ts'
 
-  import OffersNav from './offers-nav/OffersNav.svelte'
+  import OffersNav from './offers-nav'
 
   const client = getClient()
   // const offers = query(client, { query: readOpenOffers })

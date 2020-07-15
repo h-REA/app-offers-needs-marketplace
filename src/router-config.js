@@ -6,7 +6,7 @@
  */
 
 import Timeline from "./timeline/Timeline.svelte"
-import Offers from "./offers/Offers.svelte"
+import Offers from "./offers"
 import CreateOffer from "./offers/create-offer"
 
 export default {

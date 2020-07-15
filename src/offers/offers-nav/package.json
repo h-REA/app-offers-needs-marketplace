@@ -1,9 +1,9 @@
 {
-  "name": "@vf-ui/offer-create-form",
+  "name": "@vf-ui/offers-nav",
   "private": true,
   "version": "0.0.1",
-  "description": "ValueFlows compatible UI form for posting offers to a marketplace, provided as a raw Svelte component.",
-  "main": "CreateOffer.svelte",
+  "description": "An offers & needs marketplace UI control, provided as a raw Svelte component.",
+  "main": "OffersNav.svelte",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,9 +22,5 @@
   "bugs": {
     "url": "https://github.com/holo-rea/holo-rea/issues"
   },
-  "homepage": "https://github.com/holo-rea/holo-rea#readme",
-  "dependencies": {
-    "graphql-tag": "^2.10.4",
-    "svelte-apollo": "^0.3.0"
-  }
+  "homepage": "https://github.com/holo-rea/holo-rea#readme"
 }

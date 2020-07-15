@@ -1,5 +1,5 @@
 <script lang="typescript">
-  import NavLink from './nav-link/NavLink.svelte'
+  import NavLink from './nav-link'
 </script>
 
 <header class="offersnav">
