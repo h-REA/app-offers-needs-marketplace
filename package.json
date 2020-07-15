@@ -14,7 +14,8 @@
     "rollup-plugin-svelte": "^5.0.3",
     "rollup-plugin-terser": "^5.1.2",
     "svelte": "^3.24.0",
-    "svelte-preprocess": "^4.0.7"
+    "svelte-preprocess": "^4.0.7",
+    "typescript": "^3.9.6"
   },
   "dependencies": {
     "@valueflows/vf-graphql-holochain": "0.0.1-alpha.3",
