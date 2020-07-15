@@ -28,7 +28,6 @@
     "apollo-client": "^2.6.10",
     "apollo-link-schema": "^1.2.5",
     "graphql": "^14.5.8",
-    "graphql-tag": "^2.10.4",
     "routve": "^1.1.10",
     "sirv-cli": "^0.4.4",
     "svelte-apollo": "^0.3.0"
