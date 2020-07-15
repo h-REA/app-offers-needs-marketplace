@@ -1,9 +1,9 @@
 <script lang="typescript">
-  import { Router } from 'svelte-router-spa'
+  import Router from 'routve'
   import { setClient } from 'svelte-apollo'
-  import initGraphQLClient from './graphql-client.ts'
 
-  import Timeline from './timeline/Timeline.svelte'
+  import initGraphQLClient from './graphql-client.ts'
+  import routerConfig from './router-config'
 
   // init and manage GraphQL client connection
   let client = null
@@ -37,12 +37,7 @@
     <h1>Cannot connect to Holochain</h1>
     <p>{error.message}</p>
   {:else}
-    <Router routes={[
-      {
-        name: '/',
-        component: Timeline,
-      },
-    ]} />
+    <Router routerConfig={routerConfig} />
   {/if}
 </main>
 
