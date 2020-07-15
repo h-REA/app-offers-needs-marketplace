@@ -1,5 +1,9 @@
 {
-  "name": "svelte-app",
+  "name": "@holo-rea/app-offers-needs-marketplace",
+  "private": true,
+  "workspaces": [
+    "src/offers/create-offer"
+  ],
   "version": "1.0.0",
   "scripts": {
     "build": "rollup -c",

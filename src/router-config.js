@@ -7,7 +7,7 @@
 
 import Timeline from "./timeline/Timeline.svelte"
 import Offers from "./offers/Offers.svelte"
-import CreateOffer from "./offers/create-offer/CreateOffer.svelte"
+import CreateOffer from "./offers/create-offer"
 
 export default {
   basePath: "",

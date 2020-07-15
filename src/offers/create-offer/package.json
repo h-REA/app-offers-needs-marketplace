@@ -1,0 +1,29 @@
+{
+  "name": "@vf-ui/create-offer-form-svelte",
+  "version": "0.0.1",
+  "description": "ValueFlows compatible UI control for submitting generic offers to a marketplace, provided as a raw Svelte component.",
+  "main": "CreateOffer.svelte",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/holo-rea/holo-rea.git"
+  },
+  "keywords": [
+    "ValueFlows",
+    "UI",
+    "marketplace",
+    "offer",
+    "form"
+  ],
+  "author": "ValueFlows contributors",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/holo-rea/holo-rea/issues"
+  },
+  "homepage": "https://github.com/holo-rea/holo-rea#readme",
+  "devDependencies": {
+    "svelte-formup": "^0.6.2"
+  }
+}
