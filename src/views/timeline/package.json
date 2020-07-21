@@ -1,14 +1,11 @@
 {
-  "name": "@vf-ui/nav-link",
+  "name": "@vf-ui/timeline-page",
   "private": true,
   "version": "0.0.1",
-  "description": "An offers & needs marketplace UI control, provided as a raw Svelte component.",
-  "main": "NavLink.svelte",
+  "description": "ValueFlows compatible UI page for showing timeline of events in a marketplace-centric view. Provided as a raw Svelte component.",
+  "main": "Timeline.svelte",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "routve": "^1.1.10"
   },
   "repository": {
     "type": "git",
@@ -25,5 +22,14 @@
   "bugs": {
     "url": "https://github.com/holo-rea/app-offers-needs-marketplace/issues"
   },
-  "homepage": "https://github.com/holo-rea/app-offers-needs-marketplace#readme"
+  "homepage": "https://github.com/holo-rea/app-offers-needs-marketplace#readme",
+  "dependencies": {
+    "graphql-tag": "^2.10.4",
+    "routve": "^1.1.10"
+  },
+  "peerDependencies": {
+    "graphql": ">=14",
+    "svelte": "3.x",
+    "svelte-apollo": ">=0.3"
+  }
 }

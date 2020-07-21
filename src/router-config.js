@@ -5,9 +5,10 @@
  * @since:   2020-07-14
  */
 
-import Timeline from "./timeline/Timeline.svelte"
-import Offers from "./offers"
-import CreateOffer from "./offers/create-offer"
+import Timeline from "@vf-ui/timeline-page"
+
+import Offers from "@vf-ui/offers-page"
+import CreateOffer from "@vf-ui/offer-create-form"
 
 export default {
   basePath: "",

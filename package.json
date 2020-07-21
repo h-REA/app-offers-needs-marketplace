@@ -21,6 +21,10 @@
     "typescript": "^3.9.6"
   },
   "dependencies": {
+    "@vf-ui/graphql-client": "workspace:*",
+    "@vf-ui/timeline-page": "workspace:*",
+    "@vf-ui/offers-page": "workspace:*",
+    "@vf-ui/offer-create-form": "workspace:*",
     "apollo-client": "^2.6.10",
     "graphql": "^14.5.8",
     "routve": "^1.1.10",

@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/holo-rea/holo-rea.git"
+    "url": "git+ssh://git@github.com/holo-rea/app-offers-needs-marketplace.git"
   },
   "keywords": [
     "ValueFlows",
@@ -20,7 +20,7 @@
   "author": "ValueFlows contributors",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/holo-rea/holo-rea/issues"
+    "url": "https://github.com/holo-rea/app-offers-needs-marketplace/issues"
   },
-  "homepage": "https://github.com/holo-rea/holo-rea#readme"
+  "homepage": "https://github.com/holo-rea/app-offers-needs-marketplace#readme"
 }
