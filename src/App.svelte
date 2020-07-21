@@ -2,7 +2,7 @@
   import Router from 'routve'
   import { setClient } from 'svelte-apollo'
 
-  import initGraphQLClient from './graphql-client.ts'
+  import initGraphQLClient from './graphql-client'
   import routerConfig from './router-config'
 
   // init and manage GraphQL client connection
