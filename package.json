@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
+    "clean": "scripts/clean.sh",
     "build": "rollup -c",
     "dev": "REACT_APP_HC_CONN_URL='ws://localhost:4001' rollup -c -w",
     "start": "sirv public -s"
