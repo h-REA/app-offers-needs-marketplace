@@ -45,20 +45,37 @@ importers:
       apollo-cache-inmemory: 1.6.6
       apollo-link-schema: 1.2.5
     specifiers:
-      '@valueflows/vf-graphql-holochain': 0.0.1-alpha.2
+      '@valueflows/vf-graphql-holochain': 'link:../../../holo-rea/modules/vf-graphql-holochain/build'
       apollo-cache-inmemory: ^1.6.6
       apollo-link-schema: ^1.2.5
   src/views/offers:
-    specifiers: {}
+    dependencies:
+      graphql-tag: 2.10.4
+      routve: 1.1.10
+    specifiers:
+      graphql-tag: ^2.10.4
+      routve: ^1.1.10
   src/views/offers/create-offer:
+    dependencies:
+      graphql-tag: 2.10.4
+      svelte-formup: 0.6.2
+      yup: 0.29.1
+    specifiers:
+      graphql-tag: ^2.10.4
+      svelte-formup: ^0.6.2
+      yup: ^0.29.1
+  src/views/offers/offers-nav:
     dependencies:
       graphql-tag: 2.10.4
     specifiers:
       graphql-tag: ^2.10.4
-  src/views/offers/offers-nav:
-    specifiers: {}
   src/views/offers/offers-nav/nav-link:
-    specifiers: {}
+    dependencies:
+      graphql-tag: 2.10.4
+      routve: 1.1.10
+    specifiers:
+      graphql-tag: ^2.10.4
+      routve: ^1.1.10
   src/views/timeline:
     dependencies:
       graphql-tag: 2.10.4
@@ -86,6 +103,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-i6rgnR/YgPEQzZZnbTHHuZdlE8qyoBNalD6F+q4vAFlcMEcqmkoG+mPqJYJCo63qPf74+Y1UZsl3l6f7/RIkmA==
+  /@babel/runtime/7.10.5:
+    dependencies:
+      regenerator-runtime: 0.13.6
+    dev: false
+    resolution:
+      integrity: sha512-otddXKhdNn7d0ptoFRHtMLa8LqDxLYwTjB4nYgM1yy5N6gU/MUf8zqyyLltCH3yAVitBzmwK4us+DD0l/MauAg==
   /@polka/url/0.5.0:
     dev: false
     resolution:
@@ -435,6 +458,12 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==
+  /fn-name/3.0.0:
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-eNMNr5exLoavuAMhIUVsOKF79SWd/zG104ef6sxBTSw+cZc6BXdQXDvYcGvp0VbxVVSp1XDUNoz7mg1xMtSznA==
   /fs.realpath/1.0.0:
     dev: true
     resolution:
@@ -591,6 +620,14 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-ykt2pgN0aqIy6KQC1CqdWTWkmUwNgaOS6dcpHVjyBJONA+Xi7AtSB1vuxC/U/0tjIP3wcRudwQk1YYzUvzk2bA==
+  /lodash-es/4.17.15:
+    dev: false
+    resolution:
+      integrity: sha512-rlrc3yU3+JNOpZ9zj5pQtxnx2THmvRykwL4Xlxoa8I9lHBlVbbyPhgyPMioxVZ4NqyxaVVtaJnzsyOidQIhyyQ==
+  /lodash/4.17.19:
+    dev: false
+    resolution:
+      integrity: sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
   /magic-string/0.25.7:
     dependencies:
       sourcemap-codec: 1.4.8
@@ -676,6 +713,10 @@ packages:
       node: '>=8.6'
     resolution:
       integrity: sha512-q0M/9eZHzmr0AulXyPwNfZjtwZ/RBZlbN3K3CErVrk50T2ASYI7Bye0EvekFY3IP1Nt2DHu0re+V2ZHIpMkuWg==
+  /property-expr/2.0.2:
+    dev: false
+    resolution:
+      integrity: sha512-bc/5ggaYZxNkFKj374aLbEDqVADdYaLcFo8XBkishUWbaAdjlphaBFns9TvRA2pUseVL/wMFmui9X3IdNDU37g==
   /readdirp/3.4.0:
     dependencies:
       picomatch: 2.2.2
@@ -684,6 +725,10 @@ packages:
       node: '>=8.10.0'
     resolution:
       integrity: sha512-0xe001vZBnJEK+uKcj8qOhyAKPzIT+gStxWr3LCB0DwcXR5NZJ3IaC+yGnHCYzB/S7ov3m3EEbZI2zeNvX+hGQ==
+  /regenerator-runtime/0.13.6:
+    dev: false
+    resolution:
+      integrity: sha512-GmwlGiazQEbOwQWDdbbaP10i15pGtScYWLbMZuu+RKRz0cZ+g8IUONazBnaZqe7j1670IV1HgE4/8iy7CQPf4Q==
   /require-relative/0.8.7:
     dev: true
     resolution:
@@ -851,6 +896,14 @@ packages:
       svelte: ^3.0.0
     resolution:
       integrity: sha512-Ef2roOGIqqJPaNOBx4uM9EvlM0yd0ixRnFGj3sf4jmvCbcdfFXzh267GdtjfQx8IAGKwbpe9TbyI32/J6bOFpA==
+  /svelte-formup/0.6.2:
+    dev: false
+    engines:
+      node: '>=12.4'
+    peerDependencies:
+      svelte: 3.x
+    resolution:
+      integrity: sha512-3ENC9BysmTpXMCeIuJ2MByduqifk1LCgt8NZHbyaUjz9OiJJjJ11dweauBNWY4wqrEExuMDb46srlaCbCTh4Kw==
   /svelte-loadable/1.5.0:
     dev: false
     peerDependencies:
@@ -933,6 +986,10 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==
+  /synchronous-promise/2.0.13:
+    dev: false
+    resolution:
+      integrity: sha512-R9N6uDkVsghHePKh1TEqbnLddO2IY25OcsksyFp/qBe7XYd0PVbKEWxhcdMhpLzE1I6skj5l4aEZ3CRxcbArlA==
   /terser/4.8.0:
     dependencies:
       commander: 2.20.3
@@ -958,6 +1015,10 @@ packages:
       node: '>=8.0'
     resolution:
       integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==
+  /toposort/2.0.2:
+    dev: false
+    resolution:
+      integrity: sha1-riF2gXXRVZ1IvvNUILL0li8JwzA=
   /ts-invariant/0.4.4:
     dependencies:
       tslib: 1.13.0
@@ -985,6 +1046,18 @@ packages:
     dev: true
     resolution:
       integrity: sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==
+  /yup/0.29.1:
+    dependencies:
+      '@babel/runtime': 7.10.5
+      fn-name: 3.0.0
+      lodash: 4.17.19
+      lodash-es: 4.17.15
+      property-expr: 2.0.2
+      synchronous-promise: 2.0.13
+      toposort: 2.0.2
+    dev: false
+    resolution:
+      integrity: sha512-U7mPIbgfQWI6M3hZCJdGFrr+U0laG28FxMAKIgNvgl7OtyYuUoc4uy9qCWYHZjh49b8T7Ug8NNDdiMIEytcXrQ==
   /zen-observable-ts/0.8.21:
     dependencies:
       tslib: 1.13.0
