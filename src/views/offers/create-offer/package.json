@@ -24,7 +24,9 @@
   },
   "homepage": "https://github.com/holo-rea/app-offers-needs-marketplace#readme",
   "dependencies": {
-    "graphql-tag": "^2.10.4"
+    "graphql-tag": "^2.10.4",
+    "svelte-formup": "^0.6.2",
+    "yup": "^0.29.1"
   },
   "peerDependencies": {
     "graphql": ">=14",

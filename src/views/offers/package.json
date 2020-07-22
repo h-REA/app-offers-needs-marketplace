@@ -28,6 +28,8 @@
     "routve": "^1.1.10"
   },
   "peerDependencies": {
+    "graphql": ">=14",
+    "svelte": "3.x",
     "svelte-apollo": ">=0.3"
   }
 }

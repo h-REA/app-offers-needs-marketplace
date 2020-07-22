@@ -22,5 +22,13 @@
   "bugs": {
     "url": "https://github.com/holo-rea/app-offers-needs-marketplace/issues"
   },
-  "homepage": "https://github.com/holo-rea/app-offers-needs-marketplace#readme"
+  "homepage": "https://github.com/holo-rea/app-offers-needs-marketplace#readme",
+  "dependencies": {
+    "graphql-tag": "^2.10.4"
+  },
+  "peerDependencies": {
+    "graphql": ">=14",
+    "svelte": "3.x",
+    "svelte-apollo": ">=0.3"
+  }
 }
