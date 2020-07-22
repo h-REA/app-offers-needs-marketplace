@@ -30,5 +30,6 @@
     "routve": "^1.1.10",
     "sirv-cli": "^0.4.4",
     "svelte-apollo": "^0.3.0"
-  }
+  },
+  "license": "Apache-2.0"
 }
