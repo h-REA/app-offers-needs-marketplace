@@ -8,7 +8,12 @@ module.exports = {
   }
 }
 
-const topLevelPkg = require('./package.json')
+// const topLevelPkg = require('./package.json')
+
+const NON_UI_PACKAGES = [
+  '@vf-ui/graphql-client-holochain',
+  '@vf-ui/core',
+]
 
 function readPackage (pkg, context) {
   // project module validity checks
@@ -20,8 +25,8 @@ function readPackage (pkg, context) {
     throw new Error(`${pkg.name}: Invalid license! Should be \'Apache-2.0\'.`)
   }
 
-  if (pkg.name === '@vf-ui/graphql-client-holochain') {
-    // no additional deps to manage for this module (yet)
+  if (NON_UI_PACKAGES.indexOf(pkg.name) !== -1) {
+    // no additional deps to manage for these modules (yet)
   } else {
     injectSvelteBuildDeps(pkg, context)
     // :TODO: only bundle GraphQL deps if needed
