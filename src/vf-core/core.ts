@@ -23,3 +23,10 @@ export const ACTION_IDS = [
   'raise',
   'lower',
 ]
+
+export const ACTION_IDS_MARKETPLACE = [
+  'work',
+  'deliver-service',
+  'transfer',
+  'transfer-custody',
+]
