@@ -4,7 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser'
 
-import svelteConfig from './svelte.config'
+const svelteConfig = require('./svelte.config')
 
 const production = !process.env.ROLLUP_WATCH;
 
