@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "lib": [
+      "esnext"
+    ],
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "declaration": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "strictBindCallApply": true,
+    "noImplicitAny": true,
+    "noUnusedParameters": true,
+    "strict": true
+  },
+  "files": [
+    "*.ts"
+  ],
+  "include": [
+    "src/**/*.ts",
+  ]
+}
