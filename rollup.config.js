@@ -1,6 +1,7 @@
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import replace from '@rollup/plugin-replace'
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser'
 
@@ -18,6 +19,11 @@ export default {
   },
   plugins: [
     svelte(svelteConfig),
+
+    replace({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.REACT_APP_HC_CONN_URL': JSON.stringify(process.env.REACT_APP_HC_CONN_URL),
+    }),
 
     // If you have external dependencies installed from
     // npm, you'll most likely need these plugins. In
