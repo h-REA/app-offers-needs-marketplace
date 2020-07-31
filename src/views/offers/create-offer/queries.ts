@@ -15,17 +15,6 @@ export const createProposal = gql`
   ${OffersQueries.fragments.proposal}
 `
 
-export const createIntent = gql`
-  mutation($intent: IntentCreateParams) {
-    createIntent(intent: $intent) {
-      intent {
-        ...OffersIntent
-      }
-    }
-  }
-  ${OffersQueries.fragments.intent}
-`
-
 export const createProposedIntent = gql`
 mutation($proposal: ID!, $intent: ID!, $reciprocal: Boolean) {
   proposeIntent(publishedIn: $proposal, publishes: $intent, reciprocal: $reciprocal) {
