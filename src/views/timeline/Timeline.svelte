@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script>
   import { getClient, query } from 'svelte-apollo'
   import { readListingTimeline } from './queries.ts'
 

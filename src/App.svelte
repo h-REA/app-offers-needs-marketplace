@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script>
   import Router from 'routve'
   import { setClient } from 'svelte-apollo'
 

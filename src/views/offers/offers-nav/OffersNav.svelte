@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script>
   import NavLink from './nav-link'
 </script>
 

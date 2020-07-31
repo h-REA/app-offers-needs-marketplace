@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script>
   import Router from 'routve'
   import { getClient, query } from 'svelte-apollo'
   import { readOpenOffers } from './queries.ts'
