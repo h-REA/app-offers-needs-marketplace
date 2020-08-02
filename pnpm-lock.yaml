@@ -1,7 +1,6 @@
 importers:
   .:
     dependencies:
-      '@vf-ui/bind-context-agent': 'link:src/views/util/bind-context-agent'
       '@vf-ui/graphql-client-holochain': 'link:src/graphql-client'
       '@vf-ui/offer-create-form': 'link:src/views/offers/create-offer'
       '@vf-ui/offers-page': 'link:src/views/offers'
@@ -35,7 +34,6 @@ importers:
       '@rollup/plugin-commonjs': ^12.0.0
       '@rollup/plugin-node-resolve': ^8.0.0
       '@rollup/plugin-replace': ^2.3.3
-      '@vf-ui/bind-context-agent': 'workspace:*'
       '@vf-ui/graphql-client-holochain': 'workspace:*'
       '@vf-ui/offer-create-form': 'workspace:*'
       '@vf-ui/offers-page': 'workspace:*'
@@ -100,15 +98,28 @@ importers:
     dependencies:
       '@vf-ui/core': 'link:../../../../vf-core'
       '@vf-ui/form-field-error': 'link:../field-error'
+      '@vf-ui/form-input-date': 'link:../date-input'
       graphql-tag: 2.10.4
       svelte-formup: 0.6.2
       yup: 0.29.1
     specifiers:
       '@vf-ui/core': 'workspace:*'
       '@vf-ui/form-field-error': 'workspace:*'
+      '@vf-ui/form-input-date': 'workspace:*'
       graphql-tag: ^2.10.4
       svelte-formup: ^0.6.2
       yup: ^0.29.1
+  src/views/offers/create-offer/date-input:
+    dependencies:
+      fecha: 4.2.0
+      graphql-tag: 2.10.4
+      praecox-datepicker: 0.5.1
+      svelte-click-outside: 1.0.0
+    specifiers:
+      fecha: ^4.2.0
+      graphql-tag: ^2.10.4
+      praecox-datepicker: ^0.5.1
+      svelte-click-outside: ^1.0.0
   src/views/offers/create-offer/field-error:
     dependencies:
       graphql-tag: 2.10.4
@@ -1006,6 +1017,10 @@ packages:
   /fast-levenshtein/2.0.6:
     resolution:
       integrity: sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
+  /fecha/4.2.0:
+    dev: false
+    resolution:
+      integrity: sha512-aN3pcx/DSmtyoovUudctc8+6Hl4T+hI9GBBHLjA76jdZl7+b1sgh5g4k+u/GL3dTy1/pnYzKp69FpJ0OicE3Wg==
   /file-entry-cache/5.0.1:
     dependencies:
       flat-cache: 2.0.1
@@ -1600,6 +1615,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-9tXREJ4Z1j7fQo4L1X4Sd3YVM0s=
+  /praecox-datepicker/0.5.1:
+    dev: false
+    resolution:
+      integrity: sha512-PeXe578FUjYzy6OvGmz8qJfWhR5x0jiSX7A/s+LdPOH+mHavyGv8dERUiV64pC6AGvzF3DW1XjRB8/L95LPv/g==
   /prelude-ls/1.2.1:
     engines:
       node: '>= 0.8.0'
@@ -1954,6 +1973,10 @@ packages:
       svelte: ^3.0.0
     resolution:
       integrity: sha512-Ef2roOGIqqJPaNOBx4uM9EvlM0yd0ixRnFGj3sf4jmvCbcdfFXzh267GdtjfQx8IAGKwbpe9TbyI32/J6bOFpA==
+  /svelte-click-outside/1.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-TVDn5Vd8L0WI0Y9BFh/2I7judkIqYCbFKkGwGl/f8D0inwBFNyU0weKhrbJY4VQtYnWriq0NPl+mIYGisgALbw==
   /svelte-formup/0.6.2:
     dev: false
     engines:
