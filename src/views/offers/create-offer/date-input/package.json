@@ -1,0 +1,37 @@
+{
+  "name": "@vf-ui/form-input-date",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Form field date input, provided as a raw Svelte component.",
+  "main": "DateInput.svelte",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/holo-rea/app-offers-needs-marketplace.git"
+  },
+  "keywords": [
+    "ValueFlows",
+    "UI",
+    "date",
+    "input"
+  ],
+  "author": "ValueFlows contributors",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/holo-rea/app-offers-needs-marketplace/issues"
+  },
+  "homepage": "https://github.com/holo-rea/app-offers-needs-marketplace#readme",
+  "dependencies": {
+    "fecha": "^4.2.0",
+    "graphql-tag": "^2.10.4",
+    "praecox-datepicker": "^0.5.1",
+    "svelte-click-outside": "^1.0.0"
+  },
+  "peerDependencies": {
+    "graphql": ">=14",
+    "svelte": "3.x",
+    "svelte-apollo": ">=0.3"
+  }
+}
