@@ -26,5 +26,6 @@ module.exports = {
   ],
   rules: {
     'comma-dangle': [1, 'always-multiline'],
+    'no-shadow': 2,
   },
 }
