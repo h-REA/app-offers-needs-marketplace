@@ -1,46 +1,38 @@
 <script>
-  import * as yup from 'yup'
-  import { formup } from 'svelte-formup'
+import * as yup from 'yup'
+import { formup } from 'svelte-formup'
 
-  import BindContextAgent from '@vf-ui/bind-context-agent'
+import BindContextAgent from '@vf-ui/bind-context-agent'
 
-  import FieldError from '@vf-ui/form-field-error'
-  // import IntentCreateForm from '@vf-ui/offer-intent-create-form'
+import FieldError from '@vf-ui/form-field-error'
 
-  import ListGiftIntent from '@vf-ui/offer-intent-create-form/ListGiftIntent.svelte'
+import ListGiftIntent from '@vf-ui/offer-intent-create-form/ListGiftIntent.svelte'
 
-  // export let requestVisible = false
-  // requestVisible = 'dergus'
+// (validated) primary intent object held after successful child form submission
+let primaryIntent
 
-  // (validated) primary intent object held after successful child form submission
-  let primaryIntent
+// bindings to child form control submission / validation actions
+let validateGiftIntent
 
-  // bindings to child form control submission / validation actions
-  let validateGiftIntent
+const { values, errors, dirty, validate, validity } = formup({
+  schema: yup.object().shape({
+    name: yup.string(),
+    note: yup.string(),
+  }),
+  async onSubmit (data, context) {
+    // trigger child form validation
+    primaryIntent = null
+    await validateGiftIntent()
+    if (!primaryIntent) {
+      return
+    }
+    console.log('onSubmit', { data, context, primaryIntent })
+  },
+})
 
-  const { values, errors, dirty, validate, validity } = formup({
-    schema: yup.object().shape({
-      name: yup.string(),
-      note: yup.string(),
-    }),
-    async onSubmit (data, context) {
-      // trigger child form validation
-      primaryIntent = null
-      await validateGiftIntent()
-      if (!primaryIntent) {
-        return
-      }
-      console.log('onSubmit', { data, context, primaryIntent })
-    },
-  })
-
-  // function onToggleRequestFields (e) {
-  //   requestVisible = !requestVisible
-  // }
-
-  function updatePrimaryIntent (event) {
-    primaryIntent = event.detail
-  }
+function updatePrimaryIntent (event) {
+  primaryIntent = event.detail
+}
 </script>
 
 <form use:validate>
