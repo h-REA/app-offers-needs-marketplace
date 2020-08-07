@@ -12,15 +12,25 @@
   // export let requestVisible = false
   // requestVisible = 'dergus'
 
+  // (validated) primary intent object held after successful child form submission
   let primaryIntent
+
+  // bindings to child form control submission / validation actions
+  let validateGiftIntent
 
   const { values, errors, dirty, validate, validity } = formup({
     schema: yup.object().shape({
       name: yup.string(),
       note: yup.string(),
     }),
-    onSubmit (data, context) {
-      console.log('onSubmit', { data, context })
+    async onSubmit (data, context) {
+      // trigger child form validation
+      primaryIntent = null
+      await validateGiftIntent()
+      if (!primaryIntent) {
+        return
+      }
+      console.log('onSubmit', { data, context, primaryIntent })
     },
   })
 
@@ -30,7 +40,6 @@
 
   function updatePrimaryIntent (event) {
     primaryIntent = event.detail
-    console.warn(primaryIntent)
   }
 </script>
 
@@ -48,7 +57,7 @@
   </p>
 
   <BindContextAgent let:contextAgent>
-    <ListGiftIntent {contextAgent} on:change={updatePrimaryIntent} />
+    <ListGiftIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateGiftIntent} />
   </BindContextAgent>
 
   <!-- <label><input type="checkbox" on:click={onToggleRequestFields} /> Request an exchange -->
