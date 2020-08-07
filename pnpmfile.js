@@ -17,7 +17,7 @@ const NON_UI_PACKAGES = [
 
 function readPackage (pkg, context) {
   // project module validity checks
-  if (!pkg.name.startsWith('@vf-ui/')) {
+  if (!pkg.name.startsWith('@vf-ui/') || pkg.name === '@vf-ui/graphql-client-mock') {
     return pkg
   }
 
