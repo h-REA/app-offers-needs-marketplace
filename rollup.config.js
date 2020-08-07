@@ -21,8 +21,18 @@ export default {
     svelte(svelteConfig),
 
     replace({
+      // Configuration env vars passthrough
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.REACT_APP_HC_CONN_URL': JSON.stringify(process.env.REACT_APP_HC_CONN_URL),
+
+      // GraphQL client type to use for development.
+      // Possible values:
+      //   - 'mock' to use a lightweight mocked datasource
+      //   - 'holochain' to connect to a Holochain websocket running Holo-REA at process.env.REACT_APP_HC_CONN_URL
+      // Planned:
+      //   - 'commonspub'
+      //   - 'scuttlebutt'
+      __GRAPHQL_CLIENT_MODULE__: '@vf-ui/graphql-client-mock',
     }),
 
     // If you have external dependencies installed from
