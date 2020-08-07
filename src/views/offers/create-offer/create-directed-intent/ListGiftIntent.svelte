@@ -1,108 +1,108 @@
 <script>
-  import { createEventDispatcher } from 'svelte'
-  import { formup } from 'svelte-formup'
-  import * as yup from 'yup'
+import { createEventDispatcher } from 'svelte'
+import { formup } from 'svelte-formup'
+import * as yup from 'yup'
 
-  import { ACTION_IDS_MARKETPLACE } from '@vf-ui/core'
+import { ACTION_IDS_MARKETPLACE } from '@vf-ui/core'
 
-  import DateInput from '@vf-ui/form-input-date'
-  import FieldError from '@vf-ui/form-field-error'
+import DateInput from '@vf-ui/form-input-date'
+import FieldError from '@vf-ui/form-field-error'
 
-  // -- PROPS --
+// -- PROPS --
 
-  export let contextAgent
+export let contextAgent
 
-  // -- BINDINGS --
+// -- BINDINGS --
 
-  // direct access to form submission handler, to integrate in parent component submit handlers
-  export let validate
+// direct access to form submission handler, to integrate in parent component submit handlers
+export let validate
 
-  // -- INTERNAL STATE --
+// -- INTERNAL STATE --
 
-  let selectedTimeRange = []
-  let singleDateSelection = true
+let selectedTimeRange = []
+let singleDateSelection = true
 
-  // form labels (:TODO: put into i18n framework)
-  const ACTION_FORM_LABELS = {
-    work: 'Do some work',
-    'deliver-service': 'Provide a service',
-    transfer: 'Gift something',
-    'transfer-custody': 'Lend something',
+// form labels (:TODO: put into i18n framework)
+const ACTION_FORM_LABELS = {
+  work: 'Do some work',
+  'deliver-service': 'Provide a service',
+  transfer: 'Gift something',
+  'transfer-custody': 'Lend something',
+}
+
+// -- EVENT HANDLERS --
+
+function setSingleTime (single) {
+  singleDateSelection = single
+}
+
+// pull dependent data for change event
+function onSubmit (data, context) {
+  const derivedIntent = Object.assign({
+    provider: data.provider,
+    action: data.action,
+  }, (singleDateSelection ? {
+    hasPointInTime: data.hasPointInTime,
+  } : {
+    hasBeginning: data.hasBeginning,
+    hasEnd: data.hasEnd,
+  }))
+  dispatch('validated', derivedIntent)
+}
+
+// -- INIT LOGIC --
+
+const dispatch = createEventDispatcher()
+
+// const measure = yup.object().shape({
+//   hasNumericalValue: yup.number(),
+//   hasUnit: yup.string(),
+// })
+
+// const location = yup.object().shape({
+//   name: yup.string().required(),
+//   note: yup.string(),
+//   mappableAddress: yup.string(),
+//   lat: yup.number(),
+//   lng: yup.number(),
+//   alt: yup.number(),
+// })
+
+const formSpec = yup.object().shape({
+  provider: yup.string().required(),
+  action: yup.string().oneOf(ACTION_IDS_MARKETPLACE).required(),
+  name: yup.string(),
+  note: yup.string(),
+  // image: yup.string(),
+  // resourceClassifiedAs: yup.array().of(yup.string()).ensure(),
+  // resourceConformsTo: yup.string(),
+  // resourceInventoriedAs: yup.string(),
+  // resourceQuantity: measure.clone(),
+  // effortQuantity: measure.clone(),
+  // availableQuantity: measure.clone(),
+  hasBeginning: yup.date(),
+  hasEnd: yup.date(),
+  hasPointInTime: yup.date(),
+  due: yup.date(),
+  // atLocation: location.clone(),
+  // agreedIn: yup.string(),
+})
+
+const formCtx = formup({
+  schema: formSpec,
+  onSubmit,
+})
+const { values, errors, dirty, validate: validateForm, validity } = formCtx
+validate = formCtx.submit
+
+// reactive handlers to publish local state back into the form validator
+$: $values.provider = contextAgent
+$: {
+  if (selectedTimeRange && selectedTimeRange.length === 2) {
+    $values.hasBeginning = selectedTimeRange[0].start
+    $values.hasEnd = selectedTimeRange[1].end
   }
-
-  // -- EVENT HANDLERS --
-
-  function setSingleTime (single) {
-    singleDateSelection = single
-  }
-
-  // pull dependent data for change event
-  function onSubmit (data, context) {
-    const derivedIntent = Object.assign({
-      provider: data.provider,
-      action: data.action,
-    }, (singleDateSelection ? {
-      hasPointInTime: data.hasPointInTime,
-    } : {
-      hasBeginning: data.hasBeginning,
-      hasEnd: data.hasEnd,
-    }))
-    dispatch('validated', derivedIntent)
-  }
-
-  // -- INIT LOGIC --
-
-  const dispatch = createEventDispatcher()
-
-  // const measure = yup.object().shape({
-  //   hasNumericalValue: yup.number(),
-  //   hasUnit: yup.string(),
-  // })
-
-  // const location = yup.object().shape({
-  //   name: yup.string().required(),
-  //   note: yup.string(),
-  //   mappableAddress: yup.string(),
-  //   lat: yup.number(),
-  //   lng: yup.number(),
-  //   alt: yup.number(),
-  // })
-
-  const formSpec = yup.object().shape({
-    provider: yup.string().required(),
-    action: yup.string().oneOf(ACTION_IDS_MARKETPLACE).required(),
-    name: yup.string(),
-    note: yup.string(),
-    // image: yup.string(),
-    // resourceClassifiedAs: yup.array().of(yup.string()).ensure(),
-    // resourceConformsTo: yup.string(),
-    // resourceInventoriedAs: yup.string(),
-    // resourceQuantity: measure.clone(),
-    // effortQuantity: measure.clone(),
-    // availableQuantity: measure.clone(),
-    hasBeginning: yup.date(),
-    hasEnd: yup.date(),
-    hasPointInTime: yup.date(),
-    due: yup.date(),
-    // atLocation: location.clone(),
-    // agreedIn: yup.string(),
-  })
-
-  const formCtx = formup({
-    schema: formSpec,
-    onSubmit,
-  })
-  const { values, errors, dirty, validate: validateForm, validity } = formCtx
-  validate = formCtx.submit
-
-  // reactive handlers to publish local state back into the form validator
-  $: $values.provider = contextAgent
-  $: {
-    if (selectedTimeRange && selectedTimeRange.length === 2) {
-      $values.hasBeginning = selectedTimeRange[0].start
-      $values.hasEnd = selectedTimeRange[1].end
-    }
-  }
+}
 </script>
 
 <form use:validateForm>
