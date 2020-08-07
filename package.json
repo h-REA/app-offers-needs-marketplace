@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@vf-ui/graphql-client-holochain": "workspace:*",
+    "@vf-ui/graphql-client-mock": "0.0.1",
     "@vf-ui/offer-create-form": "workspace:*",
     "@vf-ui/offers-page": "workspace:*",
     "@vf-ui/timeline-page": "workspace:*",
