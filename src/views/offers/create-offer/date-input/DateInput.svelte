@@ -22,7 +22,7 @@ export let selectRange = false
 export let placeholder = 'Select a date...'
 export let dateFormat = 'MMM Do, YYYY'
 
-export let value = null // public API binding for accessing the input value
+export let value // public API binding for accessing the input value
 
 let showDatePicker = false
 let pickerResult
@@ -40,9 +40,8 @@ function closePicker () {
 // coerce values to Date objects
 function getDateValue (pickerVal) {
   if (isEmptyValue(pickerVal)) {
-    return null
+    return undefined
   }
-console.warn('date value', pickerVal)
   if (selectRange) {
     return [new Date(pickerVal[0].start), new Date(pickerVal[1].end)]
   } else {
