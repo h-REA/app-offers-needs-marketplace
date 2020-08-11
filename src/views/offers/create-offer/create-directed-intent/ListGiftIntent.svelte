@@ -20,7 +20,6 @@ export let validate
 // -- INTERNAL STATE --
 
 let selectedTimeRange = []
-let singleDateSelection = true
 
 // form labels (:TODO: put into i18n framework)
 const ACTION_FORM_LABELS = {
@@ -29,24 +28,27 @@ const ACTION_FORM_LABELS = {
   transfer: 'Gift something',
   'transfer-custody': 'Lend something',
 }
+const DATE_SELECTION_LABELS = {
+  none: 'Any time',
+  single: 'At precisely',
+  range: 'Between',
+}
 
 // -- EVENT HANDLERS --
-
-function setSingleTime (single) {
-  singleDateSelection = single
-}
 
 // pull dependent data for change event
 function onSubmit (data, context) {
   const derivedIntent = Object.assign({
     provider: data.provider,
     action: data.action,
-  }, (singleDateSelection ? {
+  },
+  (data.dateMode === 'single' ? {
     hasPointInTime: data.hasPointInTime,
-  } : {
+  } : {}),
+  (data.dateMode === 'range' ? {
     hasBeginning: data.hasBeginning,
     hasEnd: data.hasEnd,
-  }))
+  } : {}))
   dispatch('validated', derivedIntent)
 }
 
@@ -80,12 +82,27 @@ const formSpec = yup.object().shape({
   // resourceQuantity: measure.clone(),
   // effortQuantity: measure.clone(),
   // availableQuantity: measure.clone(),
-  hasBeginning: yup.date(),
-  hasEnd: yup.date(),
-  hasPointInTime: yup.date(),
+  hasBeginning: yup.date().when('dateMode', {
+    is: 'range',
+    then: yup.date().required(),
+    otherwise: yup.date(),
+  }),
+  hasEnd: yup.date().when('dateMode', {
+    is: 'range',
+    then: yup.date().required(),
+    otherwise: yup.date(),
+  }),
+  hasPointInTime: yup.date().when('dateMode', {
+    is: 'single',
+    then: yup.date().required(),
+    otherwise: yup.date(),
+  }),
   due: yup.date(),
   // atLocation: location.clone(),
   // agreedIn: yup.string(),
+
+  // not part of VF spec- internal form state
+  dateMode: yup.string().oneOf(['none', 'single', 'range']).default('none'),
 })
 
 const formCtx = formup({
@@ -122,21 +139,28 @@ $: {
 
   <h3>When is it available?</h3>
 
-  <p>
-    <button class={singleDateSelection ? 'active' : ''} on:click|preventDefault={() => setSingleTime(true)}>at</button> |
-    <button class={singleDateSelection ? '' : 'active'} on:click|preventDefault={() => setSingleTime(false)}>between</button>
+  <p use:validity>
+    {#each ['none', 'single', 'range'] as mode}
+    <label>
+      <input type=radio bind:group={$values.dateMode} value={mode} />
+      {DATE_SELECTION_LABELS[mode]}
+    </label>
+    {/each}
+    <FieldError at="dateMode" />
   </p>
 
+  {#if $values.dateMode !== 'none'}
   <p use:validity>
-    {#if singleDateSelection}
+    {#if $values.dateMode === 'single'}
       <DateInput bind:value={$values.hasPointInTime} />
       <FieldError at="hasPointInTime" />
-    {:else}
+    {:else if $values.dateMode === 'range'}
       <DateInput bind:value={selectedTimeRange} selectRange={true}/>
       <FieldError at="hasBeginning" />
       <FieldError at="hasEnd" />
     {/if}
   </p>
+  {/if}
 
   <h3>Does this offer expire?</h3>
 
