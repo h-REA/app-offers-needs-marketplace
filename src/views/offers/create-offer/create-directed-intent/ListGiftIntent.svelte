@@ -1,9 +1,9 @@
 <script>
 import { createEventDispatcher } from 'svelte'
 import { formup } from 'svelte-formup'
-import * as yup from 'yup'
 
 import { ACTION_IDS_MARKETPLACE } from '@vf-ui/core'
+import { buildFormSpec, buildSubmitHandler } from './schemas.ts'
 
 import DateInput from '@vf-ui/form-input-date'
 import MeasureInput from '@vf-ui/form-input-measure'
@@ -24,78 +24,13 @@ let selectedTimeRange = []
 
 // -- EVENT HANDLERS --
 
-// pull dependent data for change event
-function onSubmit (data, context) {
-  const derivedIntent = Object.assign({
-    provider: data.provider,
-    action: data.action,
-    resourceQuantity: data.resourceQuantity,
-  },
-  (data.dateMode === 'single' ? {
-    hasPointInTime: data.hasPointInTime,
-  } : {}),
-  (data.dateMode === 'range' ? {
-    hasBeginning: data.hasBeginning,
-    hasEnd: data.hasEnd,
-  } : {}))
-  dispatch('validated', derivedIntent)
-}
+const dispatch = createEventDispatcher()
+const onSubmit = buildSubmitHandler('provider', dispatch)
 
 // -- INIT LOGIC --
 
-const dispatch = createEventDispatcher()
-
-const measure = yup.object().shape({
-  numericalValue: yup.number(),
-  unit: yup.string(),
-})
-
-// const location = yup.object().shape({
-//   name: yup.string().required(),
-//   note: yup.string(),
-//   mappableAddress: yup.string(),
-//   lat: yup.number(),
-//   lng: yup.number(),
-//   alt: yup.number(),
-// })
-
-const formSpec = yup.object().shape({
-  provider: yup.string().required(),
-  action: yup.string().oneOf(ACTION_IDS_MARKETPLACE).required(),
-  name: yup.string(),
-  note: yup.string(),
-  // image: yup.string(),
-  // resourceClassifiedAs: yup.array().of(yup.string()).ensure(),
-  resourceConformsTo: yup.string(),
-  // resourceInventoriedAs: yup.string(),
-  resourceQuantity: measure.clone(),
-  // effortQuantity: measure.clone(),
-  // availableQuantity: measure.clone(),
-  hasBeginning: yup.date().when('dateMode', {
-    is: 'range',
-    then: yup.date().required(),
-    otherwise: yup.date(),
-  }),
-  hasEnd: yup.date().when('dateMode', {
-    is: 'range',
-    then: yup.date().required(),
-    otherwise: yup.date(),
-  }),
-  hasPointInTime: yup.date().when('dateMode', {
-    is: 'single',
-    then: yup.date().required(),
-    otherwise: yup.date(),
-  }),
-  due: yup.date(),
-  // atLocation: location.clone(),
-  // agreedIn: yup.string(),
-
-  // not part of VF spec- internal form state
-  dateMode: yup.string().oneOf(['none', 'single', 'range']),
-})
-
 const formCtx = formup({
-  schema: formSpec,
+  schema: buildFormSpec('provider'),
   onSubmit,
 })
 const { values, errors, dirty, validate: validateForm, validity } = formCtx
