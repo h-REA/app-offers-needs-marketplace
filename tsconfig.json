@@ -1,8 +1,6 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
     "lib": [
       "esnext",
       "dom"
