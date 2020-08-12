@@ -116,6 +116,8 @@ $: {
   }
 }
 
+const DATE_INPUT_TYPES = ['none', 'single', 'before', 'range', 'after']
+
 // form labels (:TODO: put into i18n framework)
 const ACTION_FORM_LABELS = {
   transfer: 'Give something',
@@ -126,7 +128,9 @@ const ACTION_FORM_LABELS = {
 const DATE_SELECTION_LABELS = {
   none: 'Any time',
   single: 'At precisely',
+  before: 'Before',
   range: 'Between',
+  after: 'Any time after',
 }
 </script>
 
@@ -173,7 +177,7 @@ const DATE_SELECTION_LABELS = {
   <h3>When is it available?</h3>
 
   <p use:validity>
-    {#each ['none', 'single', 'range'] as mode}
+    {#each DATE_INPUT_TYPES as mode}
     <label>
       <input type=radio bind:group={$values.dateMode} value={mode} />
       {DATE_SELECTION_LABELS[mode]}
@@ -187,6 +191,12 @@ const DATE_SELECTION_LABELS = {
     {#if $values.dateMode === 'single'}
       <DateInput bind:value={$values.hasPointInTime} />
       <FieldError at="hasPointInTime" />
+    {:else if $values.dateMode === 'after'}
+      <DateInput bind:value={$values.hasBeginning} />
+      <FieldError at="hasBeginning" />
+    {:else if $values.dateMode === 'before'}
+      <DateInput bind:value={$values.hasEnd} />
+      <FieldError at="hasEnd" />
     {:else if $values.dateMode === 'range'}
       <DateInput bind:value={selectedTimeRange} selectRange={true}/>
       <FieldError at="hasBeginning" />
