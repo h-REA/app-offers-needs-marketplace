@@ -1,13 +1,15 @@
 {
+  "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
     "target": "es6",
     "lib": [
-      "esnext"
+      "esnext",
+      "dom"
     ],
     "moduleResolution": "node",
     "importHelpers": true,
-    "declaration": true,
+    "declaration": false,
     "sourceMap": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
@@ -15,12 +17,12 @@
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
     "strictBindCallApply": true,
-    "noImplicitAny": true,
-    "noUnusedParameters": true,
+    "noImplicitAny": false,
+    "noUnusedParameters": false,
     "strict": true
   },
   "files": [
-    "*.ts"
+    "src/main.ts"
   ],
   "include": [
     "src/**/*.ts",
