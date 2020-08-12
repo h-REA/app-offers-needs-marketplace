@@ -6,7 +6,7 @@ import BindContextAgent from '@vf-ui/bind-context-agent'
 
 import FieldError from '@vf-ui/form-field-error'
 
-import ListGiftIntent from '@vf-ui/offer-intent-create-form/ListGiftIntent.svelte'
+import ListOfferIntent from '@vf-ui/offer-intent-create-form/ListOfferIntent.svelte'
 import ListRequestIntent from '@vf-ui/offer-intent-create-form/ListRequestIntent.svelte'
 
 // (validated) primary intent object held after successful child form submission
@@ -83,7 +83,7 @@ const LISTING_TYPE_LABELS = {
 
   <BindContextAgent let:contextAgent>
     {#if $values.listingType === 'gift'}
-      <ListGiftIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateGiftIntent} />
+      <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateGiftIntent} />
     {:else if $values.listingType === 'need'}
       <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateRequestIntent} />
     {:else if $values.listingType === 'offer'}
