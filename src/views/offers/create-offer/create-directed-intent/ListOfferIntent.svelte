@@ -2,7 +2,7 @@
 import ListIntentForm from './ListDirectedIntent.svelte'
 </script>
 
-<ListIntentForm {...$$props}
+<ListIntentForm
   contextAgentType="provider"
   formTitle="What are you offering?"
   ACTION_FORM_LABELS={{
@@ -11,4 +11,5 @@ import ListIntentForm from './ListDirectedIntent.svelte'
     work: 'Do some work',
     'deliver-service': 'Provide a specialised service',
   }}
+  {...$$props}
   />
