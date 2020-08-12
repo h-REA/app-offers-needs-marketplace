@@ -104,8 +104,10 @@ const { values, errors, dirty, validate: validateForm, validity } = formCtx
 validate = formCtx.submit
 
 // initialise form state
-$values.action = 'transfer'
 $values.dateMode = 'none'
+// initialise default values
+$values.action = 'transfer'
+$values.resourceQuantity = { hasNumericalValue: 1 }
 
 // reactive handlers to publish local state back into the form validator
 $: $values.provider = contextAgent
