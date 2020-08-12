@@ -7,12 +7,14 @@ import BindContextAgent from '@vf-ui/bind-context-agent'
 import FieldError from '@vf-ui/form-field-error'
 
 import ListGiftIntent from '@vf-ui/offer-intent-create-form/ListGiftIntent.svelte'
+import ListRequestIntent from '@vf-ui/offer-intent-create-form/ListRequestIntent.svelte'
 
 // (validated) primary intent object held after successful child form submission
 let primaryIntent
 
 // bindings to child form control submission / validation actions
 let validateGiftIntent
+let validateRequestIntent
 
 // top-level sub-states of the listing form
 const listingTypes = ['gift', 'need', 'offer', 'request']
@@ -28,7 +30,11 @@ const { values, errors, dirty, validate, validity } = formup({
   async onSubmit (data, context) {
     // trigger child form validation
     primaryIntent = null
-    await validateGiftIntent()
+    switch (data.listingType) {
+      case 'gift': await validateGiftIntent(); break
+      case 'need': await validateRequestIntent(); break
+      default: break
+    }
     if (!primaryIntent) {
       return
     }
@@ -79,6 +85,7 @@ const LISTING_TYPE_LABELS = {
     {#if $values.listingType === 'gift'}
       <ListGiftIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateGiftIntent} />
     {:else if $values.listingType === 'need'}
+      <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateRequestIntent} />
     {:else if $values.listingType === 'offer'}
     {:else if $values.listingType === 'request'}
     {:else}
@@ -86,8 +93,8 @@ const LISTING_TYPE_LABELS = {
   </BindContextAgent>
 
   <p>
-    <button type="submit">Publish offer</button>
-    <button type="reset">reset</button>
+    <button type="submit">Publish listing</button>
+    <button type="reset">Reset</button>
   </p>
 </form>
 
