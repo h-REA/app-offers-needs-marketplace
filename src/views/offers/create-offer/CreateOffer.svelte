@@ -11,9 +11,11 @@ import ListRequestIntent from '@vf-ui/offer-intent-create-form/ListRequestIntent
 
 // (validated) primary intent object held after successful child form submission
 let primaryIntent
+// (validated) reciprocal intent object, for listings which expect an exchange
+let reciprocalIntent
 
 // bindings to child form control submission / validation actions
-let validateGiftIntent
+let validateOfferIntent
 let validateRequestIntent
 
 // top-level sub-states of the listing form
@@ -31,20 +33,34 @@ const { values, errors, dirty, validate, validity } = formup({
     // trigger child form validation
     primaryIntent = null
     switch (data.listingType) {
-      case 'gift': await validateGiftIntent(); break
+      case 'gift': await validateOfferIntent(); break
       case 'need': await validateRequestIntent(); break
+      case 'offer':
+      case 'request':
+        await validateOfferIntent()
+        await validateRequestIntent()
+        // ensure there is at least 1 valid reciprocal intent
+        if (!reciprocalIntent) {
+          return
+        }
+        break
       default: break
     }
+    // all actions must ensure the presence of a primary intent
     if (!primaryIntent) {
       return
     }
-    console.log('onSubmit', { data, context, primaryIntent })
+    console.log('onSubmit', { data, context, primaryIntent, reciprocalIntent })
   },
 })
 $values.listingType = 'gift'
 
 function updatePrimaryIntent (event) {
   primaryIntent = event.detail
+}
+
+function updateReciprocalIntent (event) {
+  reciprocalIntent = event.detail
 }
 
 // form labels (:TODO: move to i18n layer)
@@ -83,12 +99,33 @@ const LISTING_TYPE_LABELS = {
 
   <BindContextAgent let:contextAgent>
     {#if $values.listingType === 'gift'}
-      <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateGiftIntent} />
+      <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateOfferIntent} />
     {:else if $values.listingType === 'need'}
       <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateRequestIntent} />
     {:else if $values.listingType === 'offer'}
+      <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateOfferIntent} />
+      <ListRequestIntent {contextAgent} on:validated={updateReciprocalIntent} bind:validate={validateRequestIntent}
+        formTitle="What do you want in return?"
+        ACTION_FORM_LABELS={{
+          transfer: 'Sell or trade for something else',
+          'transfer-custody': 'Borrow something in return',
+          work: 'Help doing some work',
+          'deliver-service': 'Delivery of a special service',
+        }}
+        />
     {:else if $values.listingType === 'request'}
+      <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateRequestIntent} />
+      <ListOfferIntent {contextAgent} on:validated={updateReciprocalIntent} bind:validate={validateOfferIntent}
+        formTitle="What are you offering in return?"
+        ACTION_FORM_LABELS={{
+          transfer: 'Payment or trade',
+          'transfer-custody': 'Loan of equipment',
+          work: 'Help doing some work',
+          'deliver-service': 'Special services',
+        }}
+        />
     {:else}
+      <!-- Invalid listingType: this should never happen! -->
     {/if}
   </BindContextAgent>
 
