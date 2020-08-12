@@ -6,8 +6,8 @@
  * @since    2020-08-02
  */
 
-export let numericalValue
-export let unit
+export let numericalValue = ''
+export let unit = ''
 export let normalizedValue
 
 $: normalizedValue = { numericalValue, unit }
