@@ -5,24 +5,24 @@
  * @since:   2020-07-14
  */
 
-import Timeline from "@vf-ui/timeline-page"
+import Timeline from '@vf-ui/timeline-page'
 
-import Offers from "@vf-ui/offers-page"
-import CreateOffer from "@vf-ui/offer-create-form"
+import Offers from '@vf-ui/offers-page'
+import CreateOffer from '@vf-ui/offer-create-form'
 
 export default {
-  basePath: "",
+  basePath: '',
   routes: {
-    "/": {
+    '/': {
       component: Timeline,
     },
-    "/offers": {
+    '/offers': {
       component: Offers,
       children: {
-        "/new" : {
-          component: CreateOffer
+        '/new': {
+          component: CreateOffer,
         },
-      }
+      },
     },
   },
 }
