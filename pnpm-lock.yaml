@@ -101,6 +101,7 @@ importers:
       '@vf-ui/core': 'link:../../../../vf-core'
       '@vf-ui/form-field-error': 'link:../field-error'
       '@vf-ui/form-input-date': 'link:../date-input'
+      '@vf-ui/form-input-measure': 'link:../measure-input'
       graphql-tag: 2.10.4
       svelte-formup: 0.6.2
       yup: 0.29.1
@@ -108,6 +109,7 @@ importers:
       '@vf-ui/core': 'workspace:*'
       '@vf-ui/form-field-error': 'workspace:*'
       '@vf-ui/form-input-date': 'workspace:*'
+      '@vf-ui/form-input-measure': 'workspace:*'
       graphql-tag: ^2.10.4
       svelte-formup: ^0.6.2
       yup: ^0.29.1
@@ -129,6 +131,11 @@ importers:
     specifiers:
       graphql-tag: ^2.10.4
       svelte-formup: ^0.6.2
+  src/views/offers/create-offer/measure-input:
+    dependencies:
+      graphql-tag: 2.10.4
+    specifiers:
+      graphql-tag: ^2.10.4
   src/views/offers/offers-nav:
     dependencies:
       graphql-tag: 2.10.4
