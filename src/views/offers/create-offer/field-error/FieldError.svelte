@@ -15,3 +15,11 @@
   <slot {error}>{error.message}</slot>
 </span>
 {/if}
+
+<style>
+.error {
+  color: #D00;
+  background: #FEE;
+  padding: 0.3em 0.5em;
+}
+</style>
