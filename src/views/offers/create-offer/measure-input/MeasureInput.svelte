@@ -8,6 +8,7 @@
 
 export let numericalValue
 export let unit
+export let normalizedValue
 
 $: normalizedValue = { numericalValue, unit }
 </script>
@@ -17,6 +18,7 @@ $: normalizedValue = { numericalValue, unit }
   <select bind:value={unit}>
     <option value=""></option>
     <option value="kg">kg</option>
+    <option value="hrs">hrs</option>
     <!-- :TODO: pull from backend -->
   </select>
 </div>
