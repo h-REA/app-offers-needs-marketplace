@@ -6,6 +6,7 @@ import * as yup from 'yup'
 import { ACTION_IDS_MARKETPLACE } from '@vf-ui/core'
 
 import DateInput from '@vf-ui/form-input-date'
+import MeasureInput from '@vf-ui/form-input-measure'
 import FieldError from '@vf-ui/form-field-error'
 
 // -- PROPS --
@@ -21,19 +22,6 @@ export let validate
 
 let selectedTimeRange = []
 
-// form labels (:TODO: put into i18n framework)
-const ACTION_FORM_LABELS = {
-  work: 'Do some work',
-  'deliver-service': 'Provide a service',
-  transfer: 'Gift something',
-  'transfer-custody': 'Lend something',
-}
-const DATE_SELECTION_LABELS = {
-  none: 'Any time',
-  single: 'At precisely',
-  range: 'Between',
-}
-
 // -- EVENT HANDLERS --
 
 // pull dependent data for change event
@@ -41,6 +29,7 @@ function onSubmit (data, context) {
   const derivedIntent = Object.assign({
     provider: data.provider,
     action: data.action,
+    resourceQuantity: data.resourceQuantity,
   },
   (data.dateMode === 'single' ? {
     hasPointInTime: data.hasPointInTime,
@@ -56,10 +45,10 @@ function onSubmit (data, context) {
 
 const dispatch = createEventDispatcher()
 
-// const measure = yup.object().shape({
-//   hasNumericalValue: yup.number(),
-//   hasUnit: yup.string(),
-// })
+const measure = yup.object().shape({
+  numericalValue: yup.number(),
+  unit: yup.string(),
+})
 
 // const location = yup.object().shape({
 //   name: yup.string().required(),
@@ -79,7 +68,7 @@ const formSpec = yup.object().shape({
   // resourceClassifiedAs: yup.array().of(yup.string()).ensure(),
   // resourceConformsTo: yup.string(),
   // resourceInventoriedAs: yup.string(),
-  // resourceQuantity: measure.clone(),
+  resourceQuantity: measure.clone(),
   // effortQuantity: measure.clone(),
   // availableQuantity: measure.clone(),
   hasBeginning: yup.date().when('dateMode', {
@@ -102,7 +91,7 @@ const formSpec = yup.object().shape({
   // agreedIn: yup.string(),
 
   // not part of VF spec- internal form state
-  dateMode: yup.string().oneOf(['none', 'single', 'range']).default('none'),
+  dateMode: yup.string().oneOf(['none', 'single', 'range']),
 })
 
 const formCtx = formup({
@@ -110,7 +99,13 @@ const formCtx = formup({
   onSubmit,
 })
 const { values, errors, dirty, validate: validateForm, validity } = formCtx
+
+// pull submit action from form for parent controls to trigger programatically
 validate = formCtx.submit
+
+// initialise form state
+$values.action = 'transfer'
+$values.dateMode = 'none'
 
 // reactive handlers to publish local state back into the form validator
 $: $values.provider = contextAgent
@@ -119,6 +114,19 @@ $: {
     $values.hasBeginning = selectedTimeRange[0].start
     $values.hasEnd = selectedTimeRange[1].end
   }
+}
+
+// form labels (:TODO: put into i18n framework)
+const ACTION_FORM_LABELS = {
+  transfer: 'Give something',
+  'transfer-custody': 'Lend something',
+  work: 'Do some work',
+  'deliver-service': 'Provide a specialised service',
+}
+const DATE_SELECTION_LABELS = {
+  none: 'Any time',
+  single: 'At precisely',
+  range: 'Between',
 }
 </script>
 
@@ -136,6 +144,27 @@ $: {
   </p>
 
   <!-- :TODO: resource autocomplete -->
+
+  {#if $values.action === 'transfer' || $values.action === 'transfer-custody'}
+    <h3>How many?</h3>
+  {:else}
+    <h3>For how long?</h3>
+    <!-- :TODO: should "deliver-service" give the option for time-based & unitless measures? What about other unit types? -->
+  {/if}
+  <p use:validity>
+    <MeasureInput bind:normalizedValue={$values.resourceQuantity} />
+    <small>(leave blank if you don't know yet)</small>
+    <FieldError at="resourceQuantity" />
+  </p>
+
+  {#if $values.action === 'transfer-custody'}
+    <h3>For how long?</h3>
+    <p use:validity>
+      <MeasureInput bind:normalizedValue={$values.effortQuantity} />
+      <small>(Leave blank for no limit)</small>
+      <FieldError at="resourceQuantity" />
+    </p>
+  {/if}
 
   <h3>When is it available?</h3>
 
@@ -162,8 +191,6 @@ $: {
   </p>
   {/if}
 
-  <h3>Does this offer expire?</h3>
-
   <!-- <p use:validity>
     <label for="name">Title</label>
     <textarea id="name" bind:value="{$values.name}" />
@@ -188,5 +215,9 @@ $: {
 <style>
   button.active {
     font-weight: bold;
+  }
+  small {
+    color: #888;
+    font-style: italic;
   }
 </style>

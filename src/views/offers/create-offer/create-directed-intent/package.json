@@ -26,6 +26,7 @@
   "dependencies": {
     "@vf-ui/core": "workspace:*",
     "@vf-ui/form-input-date": "workspace:*",
+    "@vf-ui/form-input-measure": "workspace:*",
     "@vf-ui/form-field-error": "workspace:*",
     "graphql-tag": "^2.10.4",
     "svelte-formup": "^0.6.2",
