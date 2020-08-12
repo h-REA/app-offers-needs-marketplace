@@ -66,7 +66,7 @@ const formSpec = yup.object().shape({
   note: yup.string(),
   // image: yup.string(),
   // resourceClassifiedAs: yup.array().of(yup.string()).ensure(),
-  // resourceConformsTo: yup.string(),
+  resourceConformsTo: yup.string(),
   // resourceInventoriedAs: yup.string(),
   resourceQuantity: measure.clone(),
   // effortQuantity: measure.clone(),
@@ -143,7 +143,11 @@ const DATE_SELECTION_LABELS = {
     <FieldError at="action" />
   </p>
 
-  <!-- :TODO: resource autocomplete -->
+  <p use:validity>
+    <!-- :TODO: resource autocomplete -->
+    <input type="text" bind:value={$values.resourceConformsTo} />
+    <FieldError at="resourceConformsTo" />
+  </p>
 
   {#if $values.action === 'transfer' || $values.action === 'transfer-custody'}
     <h3>How many?</h3>
