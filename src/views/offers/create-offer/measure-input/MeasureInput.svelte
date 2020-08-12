@@ -10,7 +10,8 @@ export let numericalValue = ''
 export let unit = ''
 export let normalizedValue
 
-$: normalizedValue = { numericalValue, unit }
+/* eslint no-undefined: 0 */
+$: normalizedValue = { hasNumericalValue: numericalValue === '' ? undefined : numericalValue, hasUnit: unit === '' ? undefined : unit }
 </script>
 
 <div>
