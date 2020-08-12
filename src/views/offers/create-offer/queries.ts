@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-import OffersQueries from '../queries'
+import * as OffersQueries from '../queries'
 
 // :TODO: reuse query fragments
 
