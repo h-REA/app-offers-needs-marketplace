@@ -22,6 +22,7 @@ export let contextAgent
 export let contextAgentType = 'provider' // or 'receiver'
 export let formTitle
 export let temporalFormTitle
+export let showDueField = true
 
 // form labels (:TODO: put into i18n framework)
 // action labels are configurable since they depend on the context agent type...
@@ -123,7 +124,19 @@ const DATE_INPUT_TYPES = ['none', 'single', 'before', 'range', 'after']
     </p>
   {/if}
 
-  <h3>{temporalFormTitle}</h3>
+  {#if showDueField}
+    <h3>Is there a due date?</h3>
+
+    <p use:validity>
+      <DateInput bind:value={$values.due} />
+      <small>(leave blank to omit)</small>
+      <FieldError at="due" />
+    </p>
+
+    <h3>When would you prefer it?</h3>
+  {:else}
+    <h3>{temporalFormTitle}</h3>
+  {/if}
 
   <p use:validity>
     {#each DATE_INPUT_TYPES as mode}
