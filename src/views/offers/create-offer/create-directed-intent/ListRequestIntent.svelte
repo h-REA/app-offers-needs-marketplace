@@ -5,6 +5,7 @@ import ListIntentForm from './ListDirectedIntent.svelte'
 <ListIntentForm
   contextAgentType="receiver"
   formTitle="I want to..."
+  temporalFormTitle="When do you need it?"
   ACTION_FORM_LABELS={{
     transfer: 'Ask for something I need',
     'transfer-custody': 'Borrow something',

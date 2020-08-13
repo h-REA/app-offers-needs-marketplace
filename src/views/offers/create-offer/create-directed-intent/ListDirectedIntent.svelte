@@ -21,6 +21,7 @@ import FieldError from '@vf-ui/form-field-error'
 export let contextAgent
 export let contextAgentType = 'provider' // or 'receiver'
 export let formTitle
+export let temporalFormTitle
 
 // form labels (:TODO: put into i18n framework)
 // action labels are configurable since they depend on the context agent type...
@@ -80,7 +81,6 @@ $: {
 }
 
 const DATE_INPUT_TYPES = ['none', 'single', 'before', 'range', 'after']
-
 </script>
 
 <form use:validateForm>
@@ -123,7 +123,7 @@ const DATE_INPUT_TYPES = ['none', 'single', 'before', 'range', 'after']
     </p>
   {/if}
 
-  <h3>When is it available?</h3>
+  <h3>{temporalFormTitle}</h3>
 
   <p use:validity>
     {#each DATE_INPUT_TYPES as mode}
