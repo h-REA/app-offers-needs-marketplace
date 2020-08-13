@@ -97,6 +97,8 @@ const LISTING_TYPE_LABELS = {
     <FieldError at="note" />
   </p>
 
+  <hr />
+
   <BindContextAgent let:contextAgent>
     {#if $values.listingType === 'gift'}
       <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateOfferIntent} />
@@ -104,6 +106,7 @@ const LISTING_TYPE_LABELS = {
       <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateRequestIntent} />
     {:else if $values.listingType === 'offer'}
       <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateOfferIntent} />
+      <hr />
       <ListRequestIntent {contextAgent} on:validated={updateReciprocalIntent} bind:validate={validateRequestIntent}
         formTitle="What do you want in return?"
         ACTION_FORM_LABELS={{
@@ -115,6 +118,7 @@ const LISTING_TYPE_LABELS = {
         />
     {:else if $values.listingType === 'request'}
       <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateRequestIntent} />
+      <hr />
       <ListOfferIntent {contextAgent} on:validated={updateReciprocalIntent} bind:validate={validateOfferIntent}
         formTitle="What are you offering in return?"
         ACTION_FORM_LABELS={{
@@ -129,6 +133,8 @@ const LISTING_TYPE_LABELS = {
     {/if}
   </BindContextAgent>
 
+  <hr />
+
   <p>
     <button type="submit">Publish listing</button>
     <button type="reset">Reset</button>
@@ -138,5 +144,9 @@ const LISTING_TYPE_LABELS = {
 <style>
 p, form {
   text-align: left;
+}
+hr {
+  border: 0;
+  border-top: 1px solid #DDD;
 }
 </style>
