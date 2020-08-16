@@ -99,7 +99,7 @@ $: console.log('intent validators', intentValidators)
       {LISTING_TYPE_LABELS[lType]}
     </label>
     {/each}
-    <FieldError at="action" />
+    <FieldError at="listingType" />
   </p>
 
   <p use:validity>
