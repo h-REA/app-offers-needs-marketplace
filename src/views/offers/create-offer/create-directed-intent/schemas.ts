@@ -57,7 +57,7 @@ export const buildFormSpec = (ft: IntentFormType) => yup.object().shape({
   // agreedIn: yup.string(),
 
   // not part of VF spec- internal form state
-  dateMode: yup.string().oneOf(['none', 'single', 'range']),
+  dateMode: yup.string().oneOf(['none', 'single', 'before', 'range', 'after']),
 })
 
 export const buildSubmitHandler = (ft: IntentFormType, dispatch: Function) =>
