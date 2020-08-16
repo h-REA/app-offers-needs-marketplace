@@ -63,6 +63,9 @@ function updateReciprocalIntent (event) {
   reciprocalIntent = event.detail
 }
 
+const setOfferIntentValidation = (ctx) => (validateOfferIntent = ctx.detail.submit)
+const setRequestIntentValidation = (ctx) => (validateRequestIntent = ctx.detail.submit)
+
 // form labels (:TODO: move to i18n layer)
 const LISTING_TYPE_LABELS = {
   gift: 'Gift something',
@@ -101,13 +104,13 @@ const LISTING_TYPE_LABELS = {
 
   <BindContextAgent let:contextAgent>
     {#if $values.listingType === 'gift'}
-      <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateOfferIntent} />
+      <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={setOfferIntentValidation} />
     {:else if $values.listingType === 'need'}
-      <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateRequestIntent} />
+      <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={setRequestIntentValidation} />
     {:else if $values.listingType === 'offer'}
-      <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateOfferIntent} />
+      <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={setOfferIntentValidation} />
       <hr />
-      <ListRequestIntent {contextAgent} on:validated={updateReciprocalIntent} bind:validate={validateRequestIntent}
+      <ListRequestIntent {contextAgent} on:validated={updateReciprocalIntent} on:initForm={setRequestIntentValidation}
         formTitle="What do you want in return?"
         ACTION_FORM_LABELS={{
           transfer: 'Sell or trade for something else',
@@ -117,9 +120,9 @@ const LISTING_TYPE_LABELS = {
         }}
         />
     {:else if $values.listingType === 'request'}
-      <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} bind:validate={validateRequestIntent} />
+      <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={setRequestIntentValidation} />
       <hr />
-      <ListOfferIntent {contextAgent} on:validated={updateReciprocalIntent} bind:validate={validateOfferIntent}
+      <ListOfferIntent {contextAgent} on:validated={updateReciprocalIntent} on:initForm={setOfferIntentValidation}
         formTitle="What are you offering in return?"
         ACTION_FORM_LABELS={{
           transfer: 'Payment or trade',

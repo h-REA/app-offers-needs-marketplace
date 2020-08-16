@@ -6,7 +6,7 @@
  * @package  ValueFlows UI
  * @since    2020-08-12
  */
-import { createEventDispatcher } from 'svelte'
+import { createEventDispatcher, onMount } from 'svelte'
 import { formup } from 'svelte-formup'
 
 import { ACTION_IDS_MARKETPLACE } from '@vf-ui/core'
@@ -23,6 +23,8 @@ export let contextAgentType = 'provider' // or 'receiver'
 export let formTitle
 export let temporalFormTitle
 export let showDueField = true
+// direct access to form submission handler, to integrate in parent component submit handlers
+export let validate
 
 // form labels (:TODO: put into i18n framework)
 // action labels are configurable since they depend on the context agent type...
@@ -41,11 +43,6 @@ export let DATE_SELECTION_LABELS = {
   after: 'Any time after',
 }
 
-// -- BINDINGS --
-
-// direct access to form submission handler, to integrate in parent component submit handlers
-export let validate
-
 // -- INTERNAL STATE --
 
 let selectedTimeRange = []
@@ -61,10 +58,16 @@ const formCtx = formup({
   schema: buildFormSpec(contextAgentType),
   onSubmit,
 })
-const { values, errors, dirty, validate: validateForm, validity } = formCtx
+const { values, errors, dirty, validate: validateForm, validity, submit } = formCtx
 
-// pull submit action from form for parent controls to trigger programatically
-validate = formCtx.submit
+onMount(async () => {
+  // pull submit action from form for parent controls to trigger programatically
+  validate = submit
+  // Also trigger an event to propagate the form handler ref to parent controls.
+  // The on:initForm API is needed instead of bind:validate when parent controls
+  // dynamically update the presence of child components (bindings appear to only fire once)
+  dispatch('initForm', formCtx)
+})
 
 // initialise form state
 $values.dateMode = 'none'

@@ -14,4 +14,6 @@ import ListIntentForm from './ListDirectedIntent.svelte'
     'deliver-service': 'Request a specialised service',
   }}
   {...$$props}
+  on:validated
+  on:initForm
   />
