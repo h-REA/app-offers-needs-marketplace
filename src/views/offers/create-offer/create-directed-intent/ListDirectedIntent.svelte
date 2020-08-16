@@ -75,7 +75,7 @@ $values.action = 'transfer'
 $values.resourceQuantity = { hasNumericalValue: 1 }
 
 // reactive handlers to publish local state back into the form validator
-$: $values.provider = contextAgent
+$: $values[contextAgentType] = contextAgent
 $: {
   if (selectedTimeRange && selectedTimeRange.length === 2) {
     $values.hasBeginning = selectedTimeRange[0].start
