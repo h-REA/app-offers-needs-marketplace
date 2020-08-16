@@ -9,14 +9,12 @@ import FieldError from '@vf-ui/form-field-error'
 import ListOfferIntent from '@vf-ui/offer-intent-create-form/ListOfferIntent.svelte'
 import ListRequestIntent from '@vf-ui/offer-intent-create-form/ListRequestIntent.svelte'
 
-// (validated) primary intent object held after successful child form submission
-let primaryIntent
-// (validated) reciprocal intent object, for listings which expect an exchange
-let reciprocalIntent
+// (validated) intent objects held after successful child form submission
+// index 0 is the primary intent, 1 is the reciprocal intent (if it exists)
+let pendingIntents = []
 
 // bindings to child form control submission / validation actions
-let validateOfferIntent
-let validateRequestIntent
+let intentValidators = []
 
 // top-level sub-states of the listing form
 const listingTypes = ['gift', 'need', 'offer', 'request']
@@ -30,41 +28,54 @@ const { values, errors, dirty, validate, validity } = formup({
     listingType: yup.string().oneOf(listingTypes),
   }),
   async onSubmit (data, context) {
+    // reset submission state
+    pendingIntents = []
+
     // trigger child form validation
-    primaryIntent = null
+    intentValidators.forEach(validator => validator())
+
+    // post-validation checks
     switch (data.listingType) {
-      case 'gift': await validateOfferIntent(); break
-      case 'need': await validateRequestIntent(); break
+      default:
+        // all actions must ensure the presence of a primary intent
+        if (pendingIntents.length < 1) {
+          return
+        }
+      // eslint no-fallthrough: 0 */
       case 'offer':
       case 'request':
-        await validateOfferIntent()
-        await validateRequestIntent()
-        // ensure there is at least 1 valid reciprocal intent
-        if (!reciprocalIntent) {
+        // ensure there is at least 1 valid reciprocal intent for bidirectional types
+        if (!pendingIntents.length < 2) {
           return
         }
         break
-      default: break
     }
-    // all actions must ensure the presence of a primary intent
-    if (!primaryIntent) {
-      return
-    }
-    console.log('onSubmit', { data, context, primaryIntent, reciprocalIntent })
+
+    // fire submission action
+    console.log('onSubmit', {
+      data,
+      context,
+      primaryIntent: pendingIntents[0],
+      reciprocalIntent: pendingIntents[1],
+    })
   },
 })
 $values.listingType = 'gift'
 
 function updatePrimaryIntent (event) {
-  primaryIntent = event.detail
+  pendingIntents = [event.detail, pendingIntents[1]]
 }
 
 function updateReciprocalIntent (event) {
-  reciprocalIntent = event.detail
+  pendingIntents = [pendingIntents[0], event.detail]
 }
 
-const setOfferIntentValidation = (ctx) => (validateOfferIntent = ctx.detail.submit)
-const setRequestIntentValidation = (ctx) => (validateRequestIntent = ctx.detail.submit)
+function addValidator (ctx) {
+  intentValidators = [...intentValidators, ctx.detail.submit]
+}
+function removeValidator (ctx) {
+  intentValidators = intentValidators.filter(cb => cb !== ctx.detail.submit)
+}
 
 // form labels (:TODO: move to i18n layer)
 const LISTING_TYPE_LABELS = {
@@ -73,6 +84,9 @@ const LISTING_TYPE_LABELS = {
   offer: 'Make an offer',
   request: 'Request an exchange',
 }
+
+$: console.log('pending intents', pendingIntents)
+$: console.log('intent validators', intentValidators)
 </script>
 
 <form use:validate>
@@ -104,13 +118,13 @@ const LISTING_TYPE_LABELS = {
 
   <BindContextAgent let:contextAgent>
     {#if $values.listingType === 'gift'}
-      <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={setOfferIntentValidation} />
+      <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={addValidator} on:unloadForm={removeValidator} />
     {:else if $values.listingType === 'need'}
-      <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={setRequestIntentValidation} />
+      <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={addValidator} on:unloadForm={removeValidator} />
     {:else if $values.listingType === 'offer'}
-      <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={setOfferIntentValidation} />
+      <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={addValidator} on:unloadForm={removeValidator} />
       <hr />
-      <ListRequestIntent {contextAgent} on:validated={updateReciprocalIntent} on:initForm={setRequestIntentValidation}
+      <ListRequestIntent {contextAgent} on:validated={updateReciprocalIntent} on:initForm={addValidator} on:unloadForm={removeValidator}
         formTitle="What do you want in return?"
         ACTION_FORM_LABELS={{
           transfer: 'Sell or trade for something else',
@@ -120,9 +134,9 @@ const LISTING_TYPE_LABELS = {
         }}
         />
     {:else if $values.listingType === 'request'}
-      <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={setRequestIntentValidation} />
+      <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={addValidator} on:unloadForm={removeValidator} />
       <hr />
-      <ListOfferIntent {contextAgent} on:validated={updateReciprocalIntent} on:initForm={setOfferIntentValidation}
+      <ListOfferIntent {contextAgent} on:validated={updateReciprocalIntent} on:initForm={addValidator} on:unloadForm={removeValidator}
         formTitle="What are you offering in return?"
         ACTION_FORM_LABELS={{
           transfer: 'Payment or trade',
