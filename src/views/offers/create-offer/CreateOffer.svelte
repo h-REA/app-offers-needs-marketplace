@@ -45,7 +45,7 @@ const { values, errors, dirty, validate, validity } = formup({
       case 'offer':
       case 'request':
         // ensure there is at least 1 valid reciprocal intent for bidirectional types
-        if (!pendingIntents.length < 2) {
+        if (pendingIntents.length < 2) {
           return
         }
         break
