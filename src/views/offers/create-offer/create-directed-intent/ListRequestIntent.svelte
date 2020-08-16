@@ -15,4 +15,5 @@ import ListIntentForm from './ListDirectedIntent.svelte'
   {...$$props}
   on:validated
   on:initForm
+  on:unloadForm
   />

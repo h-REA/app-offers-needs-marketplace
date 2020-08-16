@@ -6,7 +6,7 @@
  * @package  ValueFlows UI
  * @since    2020-08-12
  */
-import { createEventDispatcher, onMount } from 'svelte'
+import { createEventDispatcher, onMount, onDestroy } from 'svelte'
 import { formup } from 'svelte-formup'
 
 import { ACTION_IDS_MARKETPLACE } from '@vf-ui/core'
@@ -62,6 +62,10 @@ onMount(async () => {
   // The on:initForm API is needed instead of bind:validate when parent controls
   // dynamically update the presence of child components (bindings appear to only fire once)
   dispatch('initForm', formCtx)
+})
+onDestroy(async () => {
+  // trigger a destroy event too, to allow parent controls to unbind any validation logic
+  dispatch('unloadForm', formCtx)
 })
 
 // initialise form state
