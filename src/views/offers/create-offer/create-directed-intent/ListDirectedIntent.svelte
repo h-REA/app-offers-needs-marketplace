@@ -22,7 +22,6 @@ export let contextAgent
 export let contextAgentType = 'provider' // or 'receiver'
 export let formTitle
 export let temporalFormTitle
-export let showDueField = true
 // direct access to form submission handler, to integrate in parent component submit handlers
 export let validate
 
@@ -127,19 +126,7 @@ const DATE_INPUT_TYPES = ['none', 'single', 'before', 'range', 'after']
     </p>
   {/if}
 
-  {#if showDueField}
-    <h3>Is there a due date?</h3>
-
-    <p use:validity>
-      <DateInput bind:value={$values.due} />
-      <small>(leave blank to omit)</small>
-      <FieldError at="due" />
-    </p>
-
-    <h3>When would you prefer it?</h3>
-  {:else}
-    <h3>{temporalFormTitle}</h3>
-  {/if}
+  <h3>{temporalFormTitle}</h3>
 
   <p use:validity>
     {#each DATE_INPUT_TYPES as mode}

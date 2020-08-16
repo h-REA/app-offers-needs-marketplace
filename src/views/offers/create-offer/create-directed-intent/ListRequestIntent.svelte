@@ -4,7 +4,6 @@ import ListIntentForm from './ListDirectedIntent.svelte'
 
 <ListIntentForm
   contextAgentType="receiver"
-  showDueField={true}
   formTitle="I want to..."
   temporalFormTitle="When do you need it?"
   ACTION_FORM_LABELS={{
