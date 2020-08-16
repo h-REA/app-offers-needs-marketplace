@@ -22,8 +22,6 @@ export let contextAgent
 export let contextAgentType = 'provider' // or 'receiver'
 export let formTitle
 export let temporalFormTitle
-// direct access to form submission handler, to integrate in parent component submit handlers
-export let validate
 
 // form labels (:TODO: put into i18n framework)
 // action labels are configurable since they depend on the context agent type...
@@ -60,8 +58,6 @@ const formCtx = formup({
 const { values, errors, dirty, validate: validateForm, validity, submit } = formCtx
 
 onMount(async () => {
-  // pull submit action from form for parent controls to trigger programatically
-  validate = submit
   // Also trigger an event to propagate the form handler ref to parent controls.
   // The on:initForm API is needed instead of bind:validate when parent controls
   // dynamically update the presence of child components (bindings appear to only fire once)
