@@ -123,7 +123,7 @@ const DATE_INPUT_TYPES = ['none', 'single', 'before', 'range', 'after']
     <p use:validity>
       <MeasureInput bind:normalizedValue={$values.effortQuantity} />
       <small>(Leave blank for no limit)</small>
-      <FieldError at="resourceQuantity" />
+      <FieldError at="effortQuantity" />
     </p>
   {/if}
 
