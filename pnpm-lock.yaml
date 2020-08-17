@@ -115,6 +115,7 @@ importers:
       '@vf-ui/form-field-error': 'link:../field-error'
       '@vf-ui/form-input-date': 'link:../date-input'
       '@vf-ui/form-input-measure': 'link:../measure-input'
+      '@vf-ui/persist-svelte-store': 'link:../../../../libs/persist-svelte-store'
       graphql-tag: 2.10.4
       svelte-formup: 0.6.2
       yup: 0.29.1
@@ -123,6 +124,7 @@ importers:
       '@vf-ui/form-field-error': 'workspace:*'
       '@vf-ui/form-input-date': 'workspace:*'
       '@vf-ui/form-input-measure': 'workspace:*'
+      '@vf-ui/persist-svelte-store': 'workspace:*'
       graphql-tag: ^2.10.4
       svelte-formup: ^0.6.2
       yup: ^0.29.1
