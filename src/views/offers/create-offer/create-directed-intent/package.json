@@ -25,6 +25,7 @@
   "homepage": "https://github.com/holo-rea/app-offers-needs-marketplace#readme",
   "dependencies": {
     "@vf-ui/core": "workspace:*",
+    "@vf-ui/persist-svelte-store": "workspace:*",
     "@vf-ui/form-input-date": "workspace:*",
     "@vf-ui/form-input-measure": "workspace:*",
     "@vf-ui/form-field-error": "workspace:*",

@@ -9,6 +9,7 @@
 import { createEventDispatcher, onMount, onDestroy } from 'svelte'
 import { formup } from 'svelte-formup'
 
+import addPersistence from '@vf-ui/persist-svelte-store'
 import { ACTION_IDS_MARKETPLACE } from '@vf-ui/core'
 import { buildFormSpec, buildSubmitHandler } from './schemas.ts'
 
@@ -22,6 +23,9 @@ export let contextAgent
 export let contextAgentType = 'provider' // or 'receiver'
 export let formTitle
 export let temporalFormTitle
+
+// set to a string to persist the form state within the given key
+export let persistState = false
 
 // form labels (:TODO: put into i18n framework)
 // action labels are configurable since they depend on the context agent type...
@@ -55,7 +59,16 @@ const formCtx = formup({
   schema: buildFormSpec(contextAgentType),
   onSubmit,
 })
-const { values, errors, dirty, validate: validateForm, validity, submit } = formCtx
+const { errors, dirty, validate: validateForm, validity, submit } = formCtx
+let { values } = formCtx
+
+// initialise form state
+reset()
+
+// inject persistence wrapper to store if configured
+if (persistState) {
+  values = addPersistence(persistState, values)
+}
 
 onMount(async () => {
   // Also trigger an event to propagate the form handler ref to parent controls.
@@ -68,11 +81,14 @@ onDestroy(async () => {
   dispatch('unloadForm', formCtx)
 })
 
-// initialise form state
-$values.dateMode = 'none'
-// initialise default values
-$values.action = 'transfer'
-$values.resourceQuantity = { hasNumericalValue: 1 }
+function reset () {
+  $values = {
+    dateMode: 'none',
+    // initialise default values
+    action: 'transfer',
+    resourceQuantity: { hasNumericalValue: 1 },
+  }
+}
 
 // reactive handlers to publish local state back into the form validator
 $: $values[contextAgentType] = contextAgent

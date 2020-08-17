@@ -2,12 +2,16 @@
 import * as yup from 'yup'
 import { formup } from 'svelte-formup'
 
+import addPersistence from '@vf-ui/persist-svelte-store'
 import BindContextAgent from '@vf-ui/bind-context-agent'
 
 import FieldError from '@vf-ui/form-field-error'
 
 import ListOfferIntent from '@vf-ui/offer-intent-create-form/ListOfferIntent.svelte'
 import ListRequestIntent from '@vf-ui/offer-intent-create-form/ListRequestIntent.svelte'
+
+// set to a string to persist the form state within the given key
+export let persistState = false
 
 // (validated) intent objects held after successful child form submission
 // index 0 is the primary intent, 1 is the reciprocal intent (if it exists)
@@ -19,7 +23,7 @@ let intentValidators = []
 // top-level sub-states of the listing form
 const listingTypes = ['gift', 'need', 'offer', 'request']
 
-const { values, errors, dirty, validate, validity } = formup({
+const formCtx = formup({
   schema: yup.object().shape({
     name: yup.string(),
     note: yup.string(),
@@ -58,9 +62,21 @@ const { values, errors, dirty, validate, validity } = formup({
       primaryIntent: pendingIntents[0],
       reciprocalIntent: pendingIntents[1],
     })
+
+    // clear form state on succcess
+    reset()
   },
 })
-$values.listingType = 'gift'
+const { validate, validity } = formCtx
+let { values } = formCtx
+
+// set initial form values
+reset()
+
+// inject persistence wrapper to store if configured
+if (persistState) {
+  values = addPersistence(persistState, values)
+}
 
 function updatePrimaryIntent (event) {
   pendingIntents = [event.detail, pendingIntents[1]]
@@ -75,6 +91,10 @@ function addValidator (ctx) {
 }
 function removeValidator (ctx) {
   intentValidators = intentValidators.filter(cb => cb !== ctx.detail.submit)
+}
+
+function reset () {
+  $values = { listingType: 'gift' }
 }
 
 // form labels (:TODO: move to i18n layer)
@@ -118,13 +138,17 @@ $: console.log('intent validators', intentValidators)
 
   <BindContextAgent let:contextAgent>
     {#if $values.listingType === 'gift'}
-      <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={addValidator} on:unloadForm={removeValidator} />
+      <ListOfferIntent {contextAgent} persistState={`${persistState}-ointent`}
+        on:validated={updatePrimaryIntent} on:initForm={addValidator} on:unloadForm={removeValidator} />
     {:else if $values.listingType === 'need'}
-      <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={addValidator} on:unloadForm={removeValidator} />
+      <ListRequestIntent {contextAgent} persistState={`${persistState}-rintent`}
+        on:validated={updatePrimaryIntent} on:initForm={addValidator} on:unloadForm={removeValidator} />
     {:else if $values.listingType === 'offer'}
-      <ListOfferIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={addValidator} on:unloadForm={removeValidator} />
+      <ListOfferIntent {contextAgent} persistState={`${persistState}-ointent`}
+        on:validated={updatePrimaryIntent} on:initForm={addValidator} on:unloadForm={removeValidator} />
       <hr />
-      <ListRequestIntent {contextAgent} on:validated={updateReciprocalIntent} on:initForm={addValidator} on:unloadForm={removeValidator}
+      <ListRequestIntent {contextAgent} persistState={`${persistState}-rintent`}
+        on:validated={updateReciprocalIntent} on:initForm={addValidator} on:unloadForm={removeValidator}
         formTitle="What do you want in return?"
         ACTION_FORM_LABELS={{
           transfer: 'Sell or trade for something else',
@@ -134,9 +158,11 @@ $: console.log('intent validators', intentValidators)
         }}
         />
     {:else if $values.listingType === 'request'}
-      <ListRequestIntent {contextAgent} on:validated={updatePrimaryIntent} on:initForm={addValidator} on:unloadForm={removeValidator} />
+      <ListRequestIntent {contextAgent} persistState={`${persistState}-rintent`}
+        on:validated={updatePrimaryIntent} on:initForm={addValidator} on:unloadForm={removeValidator} />
       <hr />
-      <ListOfferIntent {contextAgent} on:validated={updateReciprocalIntent} on:initForm={addValidator} on:unloadForm={removeValidator}
+      <ListOfferIntent {contextAgent} persistState={`${persistState}-ointent`}
+        on:validated={updateReciprocalIntent} on:initForm={addValidator} on:unloadForm={removeValidator}
         formTitle="What are you offering in return?"
         ACTION_FORM_LABELS={{
           transfer: 'Payment or trade',
