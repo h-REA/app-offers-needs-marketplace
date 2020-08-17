@@ -1,0 +1,29 @@
+{
+  "name": "@vf-ui/persist-svelte-store",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Utility function for injecting persisted state from localStorage into Svelte stores (eg. for use in form handlers).",
+  "main": "persist-store.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/holo-rea/app-offers-needs-marketplace.git"
+  },
+  "keywords": [
+    "Svelte",
+    "persistence",
+    "store"
+  ],
+  "author": "ValueFlows contributors",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/holo-rea/app-offers-needs-marketplace/issues"
+  },
+  "homepage": "https://github.com/holo-rea/app-offers-needs-marketplace#readme",
+  "dependencies": {
+    "debounce": "^1.2.0",
+    "tslib": "^2.0.0"
+  }
+}

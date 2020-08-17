@@ -13,6 +13,7 @@ module.exports = {
 const NON_UI_PACKAGES = [
   '@vf-ui/graphql-client-holochain',
   '@vf-ui/core',
+  '@vf-ui/persist-svelte-store',
 ]
 
 function readPackage (pkg, context) {
