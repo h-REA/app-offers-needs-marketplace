@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "description": "ValueFlows compatible UI form for posting intents from a marketplace context, where they are usually directed. Provided as a raw Svelte component.",
-  "main": "CreateMarketplaceIntent.svelte",
+  "main": "ListDirectedIntent.svelte",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
