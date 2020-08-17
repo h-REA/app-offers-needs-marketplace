@@ -7,7 +7,7 @@
     "clean": "scripts/clean.sh",
     "build": "rollup -c",
     "dev": "REACT_APP_HC_CONN_URL='ws://localhost:4001' rollup -c -w",
-    "start": "sirv public -s"
+    "start": "sirv public -s --single"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^12.0.0",
