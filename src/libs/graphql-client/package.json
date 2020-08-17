@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/holo-rea/app-offers-needs-marketplace#readme",
   "dependencies": {
-    "@valueflows/vf-graphql-holochain": "link:../../../holo-rea/modules/vf-graphql-holochain/build",
+    "@valueflows/vf-graphql-holochain": "link:../../../../holo-rea/modules/vf-graphql-holochain/build",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-link-schema": "^1.2.5",
     "tslib": "^2.0.0"
