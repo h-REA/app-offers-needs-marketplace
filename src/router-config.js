@@ -14,7 +14,8 @@ export default {
   basePath: '',
   routes: {
     '/': {
-      component: Timeline,
+      component: CreateOffer,
+      params: { persistState: 'offer-create-form' },
     },
     '/offers': {
       component: Offers,
