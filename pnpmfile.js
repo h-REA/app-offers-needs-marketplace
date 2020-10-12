@@ -48,7 +48,7 @@ function injectSvelteBuildDeps (pkg, context) {
 function injectGraphQLBuildDeps (pkg, context) {
   pkg.dependencies = {
     ...(pkg.dependencies || {}),
-    "graphql-tag": "^2.10.4",
+    "graphql-tag": "^2.11.0",
   }
   pkg.peerDependencies = {
     ...(pkg.peerDependencies || {}),

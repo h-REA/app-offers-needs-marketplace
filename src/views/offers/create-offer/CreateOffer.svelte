@@ -1,6 +1,7 @@
 <script>
 import * as yup from 'yup'
 import { formup } from 'svelte-formup'
+import { mutation } from 'svelte-apollo'
 
 import addPersistence from '@vf-ui/persist-svelte-store'
 import BindContextAgent from '@vf-ui/bind-context-agent'

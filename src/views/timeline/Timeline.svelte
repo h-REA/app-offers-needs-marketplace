@@ -1,21 +1,20 @@
 <script>
-  import { getClient, query } from 'svelte-apollo'
+  import { query } from 'svelte-apollo'
   import { readListingTimeline } from './queries.ts'
 
-  const client = getClient()
-  const proposals = query(client, { query: readListingTimeline })
+  const proposals = query(readListingTimeline)
 </script>
 
 <div class="timeline">
-{#await $proposals}
+{#if $proposals.loading}
   Loading...
-{:then result}
+{:else if $proposals.error}
+  Error: {$proposals.error.message}
+{:else}
   <ul>
-    {#each result.data.proposals as proposal}
+    {#each $proposals.data.proposals as proposal}
       <li>{proposal.name}</li>
     {/each}
   </ul>
-{:catch error}
-  Error: {error}
-{/await}
+{/if}
 </div>

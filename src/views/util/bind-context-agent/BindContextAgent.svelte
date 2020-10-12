@@ -12,31 +12,18 @@
  * @package  ValueFlows UI
  * @since    2020-07-31
  */
-import { getClient, query } from 'svelte-apollo'
+import { query } from 'svelte-apollo'
 
 import { queryMyAgent } from './queries.ts'
 
-const client = getClient()
-const agent = query(client, { query: queryMyAgent })
-
-let loading = true
-let contextAgent
-let error
-
-agent.subscribe(promise => {
-  promise
-    /* eslint no-return-assign: 0 */
-    .then(val => contextAgent = val.data.myAgent.id)
-    .catch(e => error = e)
-    .finally(() => loading = false)
-})
+const agent = query(queryMyAgent)
 </script>
 
-{#if loading}
+{#if $agent.loading}
   <!-- :TODO: need to pull this from a caching store so it's already available before render -->
-{:else if error}
+{:else if $agent.error}
   <!-- :TODO: nicer error message -->
-  Agent loading failed: {error}
+  Agent loading failed: {$agent.error.message}
 {:else}
-  <slot {contextAgent}></slot>
+  <slot contextAgent={$agent.data.myAgent.id}></slot>
 {/if}
