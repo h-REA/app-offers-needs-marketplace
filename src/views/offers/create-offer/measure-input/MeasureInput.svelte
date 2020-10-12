@@ -8,7 +8,7 @@
 
 export let numericalValue = ''
 export let unit = ''
-export let normalizedValue
+export let normalizedValue = null
 
 /* eslint no-undefined: 0 */
 $: normalizedValue =
