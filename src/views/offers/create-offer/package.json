@@ -24,11 +24,11 @@
   },
   "homepage": "https://github.com/holo-rea/app-offers-needs-marketplace#readme",
   "dependencies": {
-    "@vf-ui/persist-svelte-store": "workspace:*",
     "@vf-ui/bind-context-agent": "workspace:*",
     "@vf-ui/form-field-error": "workspace:*",
     "@vf-ui/offer-intent-create-form": "workspace:*",
-    "graphql-tag": "^2.10.4",
+    "@vf-ui/persist-svelte-store": "workspace:*",
+    "graphql-tag": "^2.11.0",
     "svelte-formup": "^0.6.2",
     "yup": "^0.29.1"
   },

@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "graphql-tag": "^2.10.4",
+    "graphql-tag": "^2.11.0",
     "routve": "^1.1.10"
   },
   "repository": {

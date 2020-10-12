@@ -31,7 +31,7 @@
     "@vf-ui/offer-create-form": "workspace:*",
     "@vf-ui/offers-page": "workspace:*",
     "@vf-ui/timeline-page": "workspace:*",
-    "apollo-client": "^2.6.10",
+    "@apollo/client": "^3.2.3",
     "eslint": "^7.5.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
@@ -42,7 +42,7 @@
     "graphql": "^14.5.8",
     "routve": "^1.1.10",
     "sirv-cli": "^0.4.4",
-    "svelte-apollo": "^0.3.0"
+    "svelte-apollo": "^0.4.0"
   },
   "license": "Apache-2.0"
 }

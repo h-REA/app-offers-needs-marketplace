@@ -25,7 +25,7 @@
   "homepage": "https://github.com/holo-rea/app-offers-needs-marketplace#readme",
   "dependencies": {
     "fecha": "^4.2.0",
-    "graphql-tag": "^2.10.4",
+    "graphql-tag": "^2.11.0",
     "praecox-datepicker": "^0.5.1",
     "svelte-click-outside": "^1.0.0"
   },
