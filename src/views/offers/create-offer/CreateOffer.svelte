@@ -115,13 +115,13 @@ const formCtx = formup({
 
       // :TODO: show success indicator in UI
       console.info('SENT!', proposalData.data.createProposal.proposal, intents)
+
+      // clear form state on succcess
+      reset()
     } catch (e) {
       // :TODO: nice error display
       console.error(e)
     }
-
-    // clear form state on succcess
-    reset()
   },
 })
 const { validate, validity } = formCtx
