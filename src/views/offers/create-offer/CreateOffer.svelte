@@ -1,4 +1,20 @@
 <script>
+/**
+ * Top-level offer / request creation form
+ *
+ * User flow of submitting listings to a marketplace starts here.
+ *
+ * :TODO:
+ * - Sending proposals to particular agents, rather than the generic broadcast (implement `ProposedTo`)
+ * - Proposal.eligibleLocation
+ * - Proposal.unitBased and e-commerce-like listing UI
+ * - Success message
+ * - Error display on page when submission actions fail
+ * - Error handling for partial transaction failure (eg Proposal succeeds, Intent fails)
+ *
+ * @package  ValueFlows UI
+ * @since    2020-10-13
+ */
 import * as yup from 'yup'
 import { formup } from 'svelte-formup'
 import { mutation } from 'svelte-apollo'
@@ -11,6 +27,12 @@ import FieldError from '@vf-ui/form-field-error'
 import ListOfferIntent from '@vf-ui/offer-intent-create-form/ListOfferIntent.svelte'
 import ListRequestIntent from '@vf-ui/offer-intent-create-form/ListRequestIntent.svelte'
 
+import { createIntent } from '@vf-ui/offer-intent-create-form/queries'
+import { createProposal, createProposedIntent, createProposedTo } from './queries'
+
+// An array of vf:Agent identities (usually of Organizations) to use as accounting scopes for records created by this form
+export let inScopeOf = null
+
 // set to a string to persist the form state within the given key
 export let persistState = false
 
@@ -20,6 +42,12 @@ let pendingIntents = []
 
 // bindings to child form control submission / validation actions
 let intentValidators = []
+
+// API bindings
+const runCreateProposal = mutation(createProposal)
+const runCreateIntent = mutation(createIntent)
+const runCreateProposedIntent = mutation(createProposedIntent)
+// const runCreateProposedTo = mutation(createProposedTo) :TODO:
 
 // top-level sub-states of the listing form
 const listingTypes = ['gift', 'need', 'offer', 'request']
@@ -56,13 +84,47 @@ const formCtx = formup({
         break
     }
 
-    // fire submission action
+    // Validated ok! Run submission behaviours...
     console.log('onSubmit', {
       data,
       context,
       primaryIntent: pendingIntents[0],
       reciprocalIntent: pendingIntents[1],
     })
+
+    try {
+      // create Proposal to broadcast the listing first
+      const proposalData = await runCreateProposal({
+        variables: { proposal: {
+          name: data.name,
+          note: data.note,
+          hasEnd: new Date(),
+          /* eslint no-undefined: 0 */
+          inScopeOf: (inScopeOf && inScopeOf.length) ? inScopeOf : undefined,
+        } },
+      })
+      const proposalId = proposalData.data.createProposal.proposal.id
+
+      // create Intents to bind to the Proposal
+      const intents = (await Promise.all(pendingIntents.filter(i => i !== undefined).map(i => runCreateIntent({
+        variables: { intent: i },
+      })))).map(r => r.data.createIntent.intent)
+
+      // create links between all records
+      await Promise.all(intents.map((it, idx) => runCreateProposedIntent({
+        variables: {
+          proposal: proposalId,
+          intent: it.id,
+          reciprocal: idx === 1, // :SHONK: :TODO: handle arbitrary sets of primary / reciprocal intents, not just a pairing
+        },
+      })))
+
+      // :TODO: show success indicator in UI
+      console.info('SENT!', proposalData.data.createProposal.proposal, intents)
+    } catch (e) {
+      // :TODO: nice error display
+      console.error(e)
+    }
 
     // clear form state on succcess
     reset()
