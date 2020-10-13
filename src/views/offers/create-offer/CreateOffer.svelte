@@ -37,7 +37,7 @@ const formCtx = formup({
     pendingIntents = []
 
     // trigger child form validation
-    intentValidators.forEach(validator => validator())
+    await Promise.all(intentValidators.map(validator => validator()))
 
     // post-validation checks
     switch (data.listingType) {
