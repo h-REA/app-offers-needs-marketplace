@@ -85,12 +85,6 @@ const formCtx = formup({
     }
 
     // Validated ok! Run submission behaviours...
-    console.log('onSubmit', {
-      data,
-      context,
-      primaryIntent: pendingIntents[0],
-      reciprocalIntent: pendingIntents[1],
-    })
 
     try {
       // create Proposal to broadcast the listing first
