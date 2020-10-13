@@ -14,7 +14,7 @@ enum IntentFormType { provider, receiver }
 const measure = yup.object().shape({
   hasNumericalValue: yup.number(),
   hasUnit: yup.string(),
-})
+}).default(undefined)
 
 // const location = yup.object().shape({
 //   name: yup.string().required(),
