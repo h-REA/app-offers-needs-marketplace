@@ -33,7 +33,7 @@ export default {
       // Planned:
       //   - 'commonspub'
       //   - 'scuttlebutt'
-      __GRAPHQL_CLIENT_MODULE__: '@vf-ui/graphql-client-mock',
+      __GRAPHQL_CLIENT_MODULE__: '@vf-ui/graphql-client-holochain',
     }),
 
     // If you have external dependencies installed from
