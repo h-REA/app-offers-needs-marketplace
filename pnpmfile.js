@@ -11,19 +11,18 @@ module.exports = {
 // const topLevelPkg = require('./package.json')
 
 const NON_UI_PACKAGES = [
-  '@vf-ui/graphql-client-holochain',
   '@vf-ui/core',
   '@vf-ui/persist-svelte-store',
 ]
 
 function readPackage (pkg, context) {
   // project module validity checks
-  if (!pkg.name.startsWith('@vf-ui/') || pkg.name === '@vf-ui/graphql-client-mock') {
+  if (!NON_UI_PACKAGES.includes(pkg.name)) {
     return pkg
   }
 
   if (pkg.license !== 'Apache-2.0') {
-    throw new Error(`${pkg.name}: Invalid license! Should be \'Apache-2.0\'.`)
+    throw new Error(`${pkg.name}: Invalid license! \'${pkg.license}\' should be \'Apache-2.0\'.`)
   }
 
   if (NON_UI_PACKAGES.indexOf(pkg.name) !== -1) {
