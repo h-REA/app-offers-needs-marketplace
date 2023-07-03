@@ -1,3 +1,5 @@
+# Warning: This project is highly outdated, and code should not be expected to run currently
+
 # ValueFlows marketplace app
 
 > The 'kitchen sink' of REA-based marketplaces: gifting, requests, offers & needs, exchanges, sales, multilateral trades & multi-value exchanges.
